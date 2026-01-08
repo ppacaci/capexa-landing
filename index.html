@@ -4,11 +4,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Capexa — Controlled Liquidity, Progressive Withdrawals</title>
-  <meta name="description" content="Deposit major assets and withdraw progressively under transparent rules. Early access is open." />
+  <meta name="description" content="Deposit USDT (TRC-20) and withdraw progressively under transparent rules. Early access is open." />
 
   <!-- Open Graph -->
   <meta property="og:title" content="Capexa — Controlled Liquidity" />
-  <meta property="og:description" content="Deposit major assets. Withdraw progressively. Early access is open." />
+  <meta property="og:description" content="Deposit USDT (TRC-20). Withdraw progressively. Early access is open." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://capexa.io" />
   <!-- If you add /public/og.png later: -->
@@ -258,7 +258,7 @@
       <section class="card">
         <div class="inner">
           <h1>Capital access with controlled liquidity.</h1>
-          <p class="sub">Deposit major assets, participate early, and withdraw progressively under transparent rules.</p>
+          <p class="sub">Deposit USDT (TRC-20), participate early, and withdraw progressively under transparent rules.</p>
 
           <div class="ctaRow">
             <a class="btn primary" href="#deposit">Join Early Access</a>
@@ -269,8 +269,8 @@
 
           <div class="grid">
             <div class="mini">
-              <h3>Deposit Major Assets</h3>
-              <p>ETH • BTC • USDT • USDC • SOL • BNB</p>
+              <h3>Deposit USDT (TRC-20)</h3>
+              <p>Single-asset intake for speed and simplicity.</p>
             </div>
             <div class="mini">
               <h3>Structured Allocation</h3>
@@ -305,50 +305,50 @@
 
           <div class="hr"></div>
 
-          <h2 class="sectionTitle">Supported assets</h2>
-          <p class="p">ETH • BTC • USDT • USDC • SOL • BNB <span class="small">(More assets may be added over time.)</span></p>
+          <h2 class="sectionTitle">Accepted deposit asset</h2>
+          <p class="p"><strong>USDT</strong> <span class="small">(Network: Tron TRC-20 only)</span></p>
         </div>
       </aside>
     </main>
 
     <section class="section card depositCard" id="deposit" style="margin-top:18px;">
       <div class="inner">
-        <h2 class="sectionTitle">Early Access Deposit</h2>
+        <h2 class="sectionTitle">Early Access Deposit (USDT only)</h2>
         <p class="p">Capexa is currently in early access. Deposits are processed manually to ensure speed, flexibility, and accuracy.</p>
 
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px; margin-top:14px;">
           <div style="min-width:0;">
-            <div class="field">
-              <label for="asset">Select asset</label>
-              <select id="asset">
-                <option value="ETH">ETH (Ethereum)</option>
-                <option value="BTC">BTC (Bitcoin)</option>
-                <option value="USDT">USDT</option>
-                <option value="USDC">USDC</option>
-                <option value="SOL">SOL (Solana)</option>
-                <option value="BNB">BNB</option>
-              </select>
-            </div>
+  <div class="sectionTitle" style="margin-bottom:6px;">Deposit details</div>
+  <p class="p">Deposits are accepted in <strong>USDT only</strong> for operational simplicity during early access.</p>
 
-            <div class="addrBox" aria-live="polite">
-              <div class="addrRow">
-                <div>
-                  <div class="small">Deposit address</div>
-                  <div id="address" class="mono" style="font-size:13px; word-break:break-all;">REPLACE_ME_ETH_ADDRESS</div>
-                  <div id="network" class="small">Network: Ethereum (ERC-20)</div>
-                </div>
-                <button class="btn" type="button" id="copyBtn">Copy</button>
-              </div>
-              <div class="small">Send only the selected asset on the specified network.</div>
-            </div>
+  <div class="addrBox" aria-live="polite">
+    <div class="small">Deposit asset</div>
+    <div style="font-weight:750;">USDT (TRC-20)</div>
 
-            <div class="warnBox">
-              <strong>Important:</strong><br/>
-              • Only send the specified asset to the correct network<br/>
-              • Sending the wrong asset or network may result in loss of funds<br/>
-              • Always double-check wallet addresses
-            </div>
-          </div>
+    <div class="hr" style="margin:10px 0;"></div>
+
+    <div class="small">Deposit address</div>
+    <div id="address" class="mono" style="font-size:13px; word-break:break-all;">TPQtw7VZQpLj315n8BnecKdGhqMLPyyoMP</div>
+    <div id="network" class="small">Network: Tron (TRC-20) — ONLY</div>
+
+    <div class="addrRow" style="margin-top:6px;">
+      <div class="small">Double-check the address before sending.</div>
+      <button class="btn" type="button" id="copyBtn">Copy</button>
+    </div>
+  </div>
+
+  <div class="warnBox">
+    <strong>Important:</strong><br/>
+    • USDT deposits are accepted <strong>ONLY</strong> via TRC-20 (Tron)<br/>
+    • Sending via any other network may result in loss of funds<br/>
+    • Always verify the official domain: <strong>capexa.io</strong><br/>
+    • If anything looks different, stop and email <a href="mailto:info@capexa.io">info@capexa.io</a>
+  </div>
+
+  <div class="small" style="margin-top:10px;">
+    Official channels: capexa.io • info@capexa.io • @CapexaHQ
+  </div>
+</div>
 
           <div style="min-width:0;">
             <form id="confirmForm">
@@ -405,62 +405,49 @@
   </div>
 
   <script>
-    // Replace these with your real addresses + networks
-    const ASSETS = {
-      ETH: { address: "REPLACE_ME_ETH_ADDRESS", network: "Network: Ethereum (ERC-20)" },
-      BTC: { address: "REPLACE_ME_BTC_ADDRESS", network: "Network: Bitcoin" },
-      USDT:{ address: "REPLACE_ME_USDT_ADDRESS", network: "Network: Ethereum (ERC-20) or specify exact chain" },
-      USDC:{ address: "REPLACE_ME_USDC_ADDRESS", network: "Network: Ethereum (ERC-20) or specify exact chain" },
-      SOL: { address: "REPLACE_ME_SOL_ADDRESS", network: "Network: Solana" },
-      BNB: { address: "REPLACE_ME_BNB_ADDRESS", network: "Network: BNB Chain (BEP-20) or specify exact chain" },
-    };
+  const ADDRESS = "TPQtw7VZQpLj315n8BnecKdGhqMLPyyoMP";
+  const NETWORK = "Network: Tron (TRC-20) — ONLY";
+  const ASSET = "USDT (TRC-20)";
 
-    const assetEl = document.getElementById("asset");
-    const addressEl = document.getElementById("address");
-    const networkEl = document.getElementById("network");
-    const copyBtn = document.getElementById("copyBtn");
-    const form = document.getElementById("confirmForm");
-    const emailLink = document.getElementById("emailLink");
+  const addressEl = document.getElementById("address");
+  const networkEl = document.getElementById("network");
+  const copyBtn = document.getElementById("copyBtn");
+  const form = document.getElementById("confirmForm");
+  const emailLink = document.getElementById("emailLink");
 
-    function setAsset(asset){
-      const meta = ASSETS[asset];
-      addressEl.textContent = meta.address;
-      networkEl.textContent = meta.network;
-    }
-    setAsset(assetEl.value);
+  if (addressEl) addressEl.textContent = ADDRESS;
+  if (networkEl) networkEl.textContent = NETWORK;
 
-    assetEl.addEventListener("change", (e)=> setAsset(e.target.value));
-
+  if (copyBtn) {
     copyBtn.addEventListener("click", async ()=>{
-      try{
-        await navigator.clipboard.writeText(addressEl.textContent.trim());
+      try {
+        await navigator.clipboard.writeText(ADDRESS);
         const old = copyBtn.textContent;
         copyBtn.textContent = "Copied";
         setTimeout(()=> copyBtn.textContent = old, 900);
-      }catch{
+      } catch {
         alert("Copy failed. Please copy manually.");
       }
     });
+  }
 
+  if (form) {
     form.addEventListener("submit", (e)=>{
       e.preventDefault();
-      const asset = assetEl.value;
-      const addr = addressEl.textContent.trim();
-      const network = networkEl.textContent.trim();
       const email = document.getElementById("email").value.trim();
       const tx = document.getElementById("tx").value.trim();
       const amount = document.getElementById("amount").value.trim();
       const note = document.getElementById("note").value.trim();
 
-      const subject = encodeURIComponent(`Capexa Deposit Confirmation — ${asset}`);
+      const subject = encodeURIComponent("Capexa Deposit Confirmation — USDT (TRC-20)");
       const body = encodeURIComponent(
 `Hello Capexa Team,
 
 I have made a deposit.
 
-Asset: ${asset}
-Network: ${network}
-Deposit address: ${addr}
+Asset: ${ASSET}
+Network: ${NETWORK}
+Deposit address: ${ADDRESS}
 TX Hash: ${tx}
 Amount (optional): ${amount}
 
@@ -470,13 +457,11 @@ Notes: ${note}
 Thanks`
       );
 
-      // Prefill an email to info@
       const mailto = `mailto:info@capexa.io?subject=${subject}&body=${body}`;
-      emailLink.href = mailto;
-
-      // Also open the email composer immediately (optional)
+      if (emailLink) emailLink.href = mailto;
       window.location.href = mailto;
     });
-  </script>
+  }
+</script>
 </body>
 </html>
