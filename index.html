@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Capexa — Controlled Liquidity, Progressive Withdrawals</title>
+  <meta name="description" content="Deposit major assets and withdraw progressively under transparent rules. Early access is open." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Capexa — Controlled Liquidity" />
+  <meta property="og:description" content="Deposit major assets. Withdraw progressively. Early access is open." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://capexa.io" />
+  <!-- If you add /public/og.png later: -->
+  <!-- <meta property="og:image" content="https://capexa.io/og.png" /> -->
+
+  <style>
+    :root{
+      --bg:#07090f;
+      --panel:#0c1020;
+      --panel2:#0a0e1a;
+      --text:#e9ecff;
+      --muted:#aab1d6;
+      --line:rgba(255,255,255,.10);
+      --accent:#6ea8ff;
+      --accent2:#7cffb5;
+      --warn:#ffd67a;
+      --danger:#ff7a7a;
+      --radius:18px;
+      --shadow: 0 16px 60px rgba(0,0,0,.55);
+      --shadow2: 0 10px 30px rgba(0,0,0,.40);
+      --max: 1080px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background:
+        radial-gradient(900px 500px at 20% 10%, rgba(110,168,255,.18), transparent 60%),
+        radial-gradient(900px 500px at 80% 20%, rgba(124,255,181,.10), transparent 55%),
+        radial-gradient(900px 500px at 60% 90%, rgba(110,168,255,.10), transparent 55%),
+        var(--bg);
+      color:var(--text);
+      line-height:1.5;
+    }
+    a{color:inherit}
+    .wrap{max-width:var(--max); margin:0 auto; padding:28px 18px 64px}
+    header{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; padding:8px 2px 22px;
+    }
+    .brand{display:flex; align-items:center; gap:10px; text-decoration:none}
+    .logo{
+      width:34px; height:34px; border-radius:12px;
+      background: linear-gradient(135deg, rgba(110,168,255,.95), rgba(124,255,181,.85));
+      box-shadow: var(--shadow2);
+    }
+    .brand span{font-weight:750; letter-spacing:.2px}
+    .nav{display:flex; gap:14px; align-items:center}
+    .nav a{color:var(--muted); text-decoration:none; font-size:14px}
+    .nav a:hover{color:var(--text)}
+    .pill{
+      font-size:12px; padding:7px 10px; border-radius:999px;
+      border:1px solid var(--line); color:var(--muted);
+      background: rgba(255,255,255,.03);
+    }
+
+    .hero{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap:18px;
+      align-items:stretch;
+      margin-top:10px;
+    }
+    @media (max-width: 920px){
+      .hero{grid-template-columns:1fr; }
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .card .inner{padding:22px}
+    h1{
+      margin:0 0 10px;
+      font-size:42px;
+      line-height:1.08;
+      letter-spacing:-.6px;
+    }
+    @media (max-width: 520px){
+      h1{font-size:34px}
+    }
+    .sub{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size:16px;
+      max-width: 58ch;
+    }
+    .ctaRow{display:flex; gap:12px; flex-wrap:wrap; align-items:center}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      border-radius: 14px;
+      padding:12px 14px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color:var(--text);
+      text-decoration:none;
+      font-weight:650;
+      font-size:14px;
+      cursor:pointer;
+      transition: transform .08s ease, background .12s ease, border-color .12s ease;
+      user-select:none;
+    }
+    .btn:hover{background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.16)}
+    .btn:active{transform: translateY(1px)}
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(110,168,255,.92), rgba(124,255,181,.85));
+      border-color: rgba(255,255,255,.18);
+      color:#061021;
+    }
+    .note{
+      margin-top:12px; color:var(--muted); font-size:13px;
+    }
+
+    .grid{
+      display:grid; gap:14px;
+      grid-template-columns: repeat(3, 1fr);
+      margin-top:14px;
+    }
+    @media (max-width: 920px){
+      .grid{grid-template-columns:1fr}
+    }
+    .mini{
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.18);
+      border-radius: 16px;
+      padding:16px;
+    }
+    .mini h3{margin:0 0 6px; font-size:15px}
+    .mini p{margin:0; color:var(--muted); font-size:13px}
+
+    .section{margin-top:18px}
+    .sectionTitle{
+      margin:0 0 10px;
+      font-size:18px;
+      letter-spacing:-.2px;
+    }
+    .p{margin:0; color:var(--muted); font-size:14px}
+    .hr{height:1px; background:var(--line); margin:16px 0}
+
+    .rules{
+      display:grid; gap:10px;
+      margin-top:10px;
+    }
+    .rule{
+      display:flex; justify-content:space-between; align-items:center;
+      gap:12px;
+      padding:12px 14px;
+      border:1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255,255,255,.02);
+      font-size:14px;
+    }
+    .rule span{color:var(--muted)}
+    .badge{
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      color:var(--text);
+      white-space:nowrap;
+    }
+    .badge.warn{border-color: rgba(255,214,122,.35); background: rgba(255,214,122,.08); color: #ffe8b0;}
+    .badge.good{border-color: rgba(124,255,181,.28); background: rgba(124,255,181,.08); color: #caffdf;}
+
+    .depositCard .inner{padding:20px}
+    .field{display:flex; flex-direction:column; gap:6px; margin-top:10px}
+    label{font-size:12px; color:var(--muted)}
+    select,input,textarea{
+      border-radius: 14px;
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.22);
+      color: var(--text);
+      padding:12px 12px;
+      outline:none;
+      font-size:14px;
+    }
+    textarea{min-height: 88px; resize: vertical}
+    .addrBox{
+      margin-top:10px;
+      border:1px dashed rgba(255,255,255,.18);
+      background: rgba(255,255,255,.02);
+      border-radius: 14px;
+      padding:12px;
+      display:flex; flex-direction:column; gap:8px;
+    }
+    .addrRow{
+      display:flex; gap:10px; align-items:center; justify-content:space-between;
+      flex-wrap:wrap;
+    }
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
+    .small{font-size:12px; color:var(--muted)}
+    .warnBox{
+      margin-top:12px;
+      border:1px solid rgba(255,122,122,.22);
+      background: rgba(255,122,122,.08);
+      border-radius: 14px;
+      padding:12px;
+      color:#ffd1d1;
+      font-size:13px;
+    }
+
+    footer{
+      margin-top:28px;
+      padding-top:16px;
+      border-top:1px solid var(--line);
+      color:var(--muted);
+      font-size:13px;
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:center;
+    }
+    .links a{color:var(--muted); text-decoration:none; margin-left:12px}
+    .links a:hover{color:var(--text)}
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="#top" aria-label="Capexa home">
+        <div class="logo" aria-hidden="true"></div>
+        <span>Capexa</span>
+        <span class="pill">Early Access</span>
+      </a>
+      <nav class="nav">
+        <a href="#rules">Rules</a>
+        <a href="#deposit">Deposit</a>
+        <a href="#risk">Risk</a>
+      </nav>
+    </header>
+
+    <main id="top" class="hero">
+      <section class="card">
+        <div class="inner">
+          <h1>Capital access with controlled liquidity.</h1>
+          <p class="sub">Deposit major assets, participate early, and withdraw progressively under transparent rules.</p>
+
+          <div class="ctaRow">
+            <a class="btn primary" href="#deposit">Join Early Access</a>
+            <a class="btn" href="mailto:info@capexa.io?subject=Capexa%20Early%20Access%20Question">Contact</a>
+          </div>
+
+          <div class="note">Manual deposits during early access phase.</div>
+
+          <div class="grid">
+            <div class="mini">
+              <h3>Deposit Major Assets</h3>
+              <p>ETH • BTC • USDT • USDC • SOL • BNB</p>
+            </div>
+            <div class="mini">
+              <h3>Structured Allocation</h3>
+              <p>Capital participates inside the system under predefined access conditions.</p>
+            </div>
+            <div class="mini">
+              <h3>Progressive Withdrawals</h3>
+              <p>Liquidity unlocks gradually over time — not all at once.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="card">
+        <div class="inner">
+          <h2 class="sectionTitle" id="rules">Progressive Withdrawal Rules</h2>
+          <p class="p">Rules are disclosed clearly before deposit. Withdrawals above the penalty-free limit trigger a predefined early exit fee.</p>
+
+          <div class="rules">
+            <div class="rule"><div>Month 1 <span>Penalty-free withdrawal</span></div><div class="badge good">Up to 10%</div></div>
+            <div class="rule"><div>Month 2+ <span>Penalty-free limit increases</span></div><div class="badge good">Progressive</div></div>
+            <div class="rule"><div>Month 11+ <span>Penalty-free withdrawal</span></div><div class="badge warn">100%</div></div>
+          </div>
+
+          <div class="hr"></div>
+
+          <h2 class="sectionTitle">Why controlled liquidity matters</h2>
+          <p class="p">
+            Most capital systems fail because liquidity is unmanaged. Instant full exits break systems.
+            Capexa introduces progressive access — allowing capital to work efficiently while preserving participant control.
+          </p>
+
+          <div class="hr"></div>
+
+          <h2 class="sectionTitle">Supported assets</h2>
+          <p class="p">ETH • BTC • USDT • USDC • SOL • BNB <span class="small">(More assets may be added over time.)</span></p>
+        </div>
+      </aside>
+    </main>
+
+    <section class="section card depositCard" id="deposit" style="margin-top:18px;">
+      <div class="inner">
+        <h2 class="sectionTitle">Early Access Deposit</h2>
+        <p class="p">Capexa is currently in early access. Deposits are processed manually to ensure speed, flexibility, and accuracy.</p>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px; margin-top:14px;">
+          <div style="min-width:0;">
+            <div class="field">
+              <label for="asset">Select asset</label>
+              <select id="asset">
+                <option value="ETH">ETH (Ethereum)</option>
+                <option value="BTC">BTC (Bitcoin)</option>
+                <option value="USDT">USDT</option>
+                <option value="USDC">USDC</option>
+                <option value="SOL">SOL (Solana)</option>
+                <option value="BNB">BNB</option>
+              </select>
+            </div>
+
+            <div class="addrBox" aria-live="polite">
+              <div class="addrRow">
+                <div>
+                  <div class="small">Deposit address</div>
+                  <div id="address" class="mono" style="font-size:13px; word-break:break-all;">REPLACE_ME_ETH_ADDRESS</div>
+                  <div id="network" class="small">Network: Ethereum (ERC-20)</div>
+                </div>
+                <button class="btn" type="button" id="copyBtn">Copy</button>
+              </div>
+              <div class="small">Send only the selected asset on the specified network.</div>
+            </div>
+
+            <div class="warnBox">
+              <strong>Important:</strong><br/>
+              • Only send the specified asset to the correct network<br/>
+              • Sending the wrong asset or network may result in loss of funds<br/>
+              • Always double-check wallet addresses
+            </div>
+          </div>
+
+          <div style="min-width:0;">
+            <form id="confirmForm">
+              <div class="field">
+                <label for="email">Your email</label>
+                <input id="email" type="email" placeholder="you@domain.com" required />
+              </div>
+              <div class="field">
+                <label for="tx">Transaction hash (TXID)</label>
+                <input id="tx" type="text" placeholder="Paste tx hash" required />
+              </div>
+              <div class="field">
+                <label for="amount">Amount (optional)</label>
+                <input id="amount" type="text" placeholder="e.g., 1.25" />
+              </div>
+              <div class="field">
+                <label for="note">Notes (optional)</label>
+                <textarea id="note" placeholder="Any notes, contact handle, etc."></textarea>
+              </div>
+
+              <div class="ctaRow" style="margin-top:12px;">
+                <button class="btn primary" type="submit">Submit for Confirmation</button>
+                <a class="btn" id="emailLink" href="mailto:info@capexa.io">Email Info</a>
+              </div>
+
+              <p class="small" style="margin-top:10px;">
+                For confirmation or questions: <a href="mailto:info@capexa.io">info@capexa.io</a>
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section card" id="risk">
+      <div class="inner">
+        <h2 class="sectionTitle">Risk & Transparency</h2>
+        <p class="p">
+          Capexa is an early-stage capital access program. Returns are not guaranteed and participation involves market and operational risks.
+          Withdrawal rules, access conditions, and fees are disclosed clearly before deposit.
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      <div>Capexa © 2026 • <a href="mailto:info@capexa.io">info@capexa.io</a></div>
+      <div class="links">
+        <!-- Add real links later if you want -->
+        <a href="#rules">Rules</a>
+        <a href="#deposit">Deposit</a>
+        <a href="#risk">Risk</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Replace these with your real addresses + networks
+    const ASSETS = {
+      ETH: { address: "REPLACE_ME_ETH_ADDRESS", network: "Network: Ethereum (ERC-20)" },
+      BTC: { address: "REPLACE_ME_BTC_ADDRESS", network: "Network: Bitcoin" },
+      USDT:{ address: "REPLACE_ME_USDT_ADDRESS", network: "Network: Ethereum (ERC-20) or specify exact chain" },
+      USDC:{ address: "REPLACE_ME_USDC_ADDRESS", network: "Network: Ethereum (ERC-20) or specify exact chain" },
+      SOL: { address: "REPLACE_ME_SOL_ADDRESS", network: "Network: Solana" },
+      BNB: { address: "REPLACE_ME_BNB_ADDRESS", network: "Network: BNB Chain (BEP-20) or specify exact chain" },
+    };
+
+    const assetEl = document.getElementById("asset");
+    const addressEl = document.getElementById("address");
+    const networkEl = document.getElementById("network");
+    const copyBtn = document.getElementById("copyBtn");
+    const form = document.getElementById("confirmForm");
+    const emailLink = document.getElementById("emailLink");
+
+    function setAsset(asset){
+      const meta = ASSETS[asset];
+      addressEl.textContent = meta.address;
+      networkEl.textContent = meta.network;
+    }
+    setAsset(assetEl.value);
+
+    assetEl.addEventListener("change", (e)=> setAsset(e.target.value));
+
+    copyBtn.addEventListener("click", async ()=>{
+      try{
+        await navigator.clipboard.writeText(addressEl.textContent.trim());
+        const old = copyBtn.textContent;
+        copyBtn.textContent = "Copied";
+        setTimeout(()=> copyBtn.textContent = old, 900);
+      }catch{
+        alert("Copy failed. Please copy manually.");
+      }
+    });
+
+    form.addEventListener("submit", (e)=>{
+      e.preventDefault();
+      const asset = assetEl.value;
+      const addr = addressEl.textContent.trim();
+      const network = networkEl.textContent.trim();
+      const email = document.getElementById("email").value.trim();
+      const tx = document.getElementById("tx").value.trim();
+      const amount = document.getElementById("amount").value.trim();
+      const note = document.getElementById("note").value.trim();
+
+      const subject = encodeURIComponent(`Capexa Deposit Confirmation — ${asset}`);
+      const body = encodeURIComponent(
+`Hello Capexa Team,
+
+I have made a deposit.
+
+Asset: ${asset}
+Network: ${network}
+Deposit address: ${addr}
+TX Hash: ${tx}
+Amount (optional): ${amount}
+
+Contact email: ${email}
+Notes: ${note}
+
+Thanks`
+      );
+
+      // Prefill an email to info@
+      const mailto = `mailto:info@capexa.io?subject=${subject}&body=${body}`;
+      emailLink.href = mailto;
+
+      // Also open the email composer immediately (optional)
+      window.location.href = mailto;
+    });
+  </script>
+</body>
+</html>
