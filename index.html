@@ -1,3 +1,4 @@
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -7,17 +8,13 @@
   <link rel="apple-touch-icon" href="/favicon.png">
   <meta name="description" content="Deposit USDT (TRC-20) and withdraw progressively under transparent rules. Early access is open." />
 
+  <!-- Open Graph -->
   <meta property="og:title" content="Capexa — Controlled Liquidity" />
-  <meta property="og:description" content="Deposit USDT (TRC-20). Withdraw progressively under transparent rules." />
+  <meta property="og:description" content="Deposit USDT (TRC-20). Withdraw progressively. Early access is open." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://capexa.io" />
-  <meta property="og:image" content="https://capexa.io/og.png" />
-  
-  <!-- Twitter/X -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Capexa — Controlled Liquidity" />
-  <meta name="twitter:description" content="Deposit USDT (TRC-20). Withdraw progressively under transparent rules." />
-  <meta name="twitter:image" content="https://capexa.io/og.png" />
+  <!-- If you add /public/og.png later: -->
+  <!-- <meta property="og:image" content="https://capexa.io/og.png" /> -->
 
   <style>
     :root{
@@ -242,6 +239,11 @@
     window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
   </script>
   <script defer src="/_vercel/insights/script.js"></script>
+  <meta property="og:description" content="Deposit USDT (TRC-20). Withdraw progressively under transparent rules." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Capexa — Controlled Liquidity" />
+  <meta name="twitter:description" content="Deposit USDT (TRC-20). Withdraw progressively under transparent rules." />
+  <meta name="twitter:image" content="https://capexa.io/og.png" />
 </head>
 
 <body>
@@ -333,6 +335,7 @@
         <h2 class="sectionTitle">Early Access Deposit (USDT only)</h2>
         <p class="p"><strong>Minimum deposit:</strong> 250 USDT</p>
         <p class="p">Capexa is currently in early access. Deposits are processed manually to ensure speed, flexibility, and accuracy.</p>
+        <p class="p">Deposits are confirmed manually. You will receive a confirmation email after verification.</p>
 
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px; margin-top:14px;">
           <div style="min-width:0;">
@@ -353,7 +356,6 @@
       <div class="small">Double-check the address before sending.</div>
       <button class="btn" type="button" id="copyBtn">Copy</button>
     </div>
-  </div>
   
   <div style="margin-top:12px; text-align:center;">
     <img src="/usdt_trc20_qr.png" alt="USDT TRC-20 QR Code"
@@ -361,6 +363,8 @@
     <div class="small" style="margin-top:6px;">
       Scan to deposit USDT (TRC-20)
     </div>
+  </div>
+
   </div>
 
   <div class="warnBox">
@@ -405,6 +409,16 @@
                 For confirmation or questions: <a href="mailto:info@capexa.io">info@capexa.io</a>
               </p>
             </form>
+
+              <div class="mini" style="margin-top:12px;">
+                <h3>What happens next?</h3>
+                <p>
+                  After your deposit:
+                  <br/>• We verify your transaction manually
+                  <br/>• You receive a confirmation email
+                  <br/>• Your participation is activated under early access terms
+                </p>
+              </div>
           </div>
         </div>
       </div>
@@ -443,6 +457,7 @@
       </div>
     </section>
 
+
 <section class="section card" id="risk">
       <div class="inner">
         <h2 class="sectionTitle">Risk & Transparency</h2>
@@ -468,6 +483,7 @@
   const ADDRESS = "TPQtw7VZQpLj315n8BnecKdGhqMLPyyoMP";
   const NETWORK = "Network: Tron (TRC-20) — ONLY";
   const ASSET = "USDT (TRC-20)";
+  const MIN_DEPOSIT_USDT = 250;
 
   const addressEl = document.getElementById("address");
   const networkEl = document.getElementById("network");
@@ -497,6 +513,16 @@
       const email = document.getElementById("email").value.trim();
       const tx = document.getElementById("tx").value.trim();
       const amount = document.getElementById("amount").value.trim();
+      if (amount) {
+        const n = Number(amount);
+        if (!Number.isFinite(n) || n <= 0) {
+          alert("Please enter a valid amount or leave it blank.");
+          return;
+        }
+        if (n < MIN_DEPOSIT_USDT) {
+          alert(`Minimum deposit is ${MIN_DEPOSIT_USDT} USDT. You can still submit, but deposits below the minimum may not be accepted.`);
+        }
+      }
       const note = document.getElementById("note").value.trim();
 
       const subject = encodeURIComponent("Capexa Deposit Confirmation — USDT (TRC-20)");
