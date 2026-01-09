@@ -243,7 +243,7 @@
     .links a{color:var(--muted); text-decoration:none; margin-left:12px}
     .links a:hover{color:var(--text)}
 
-    /* NEW: compact split grid */
+    /* compact split grid */
     .twoCol{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -252,6 +252,17 @@
     }
     @media (max-width: 920px){
       .twoCol{grid-template-columns:1fr}
+    }
+
+    /* NEW: schedule table */
+    .sched{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+      margin-top:12px;
+    }
+    @media (max-width: 520px){
+      .sched{grid-template-columns:1fr}
     }
   </style>
 
@@ -311,7 +322,6 @@
             </div>
           </div>
 
-          <!-- NEW: Yield & access quick explainer -->
           <div class="mini" style="margin-top:14px;">
             <h3>Yield & access mechanics (in one minute)</h3>
             <p>
@@ -375,7 +385,6 @@
       </aside>
     </main>
 
-    <!-- NEW: Yield section -->
     <section class="section card" id="yield">
       <div class="inner">
         <h2 class="sectionTitle">Yield & Withdrawal Mechanics</h2>
@@ -401,6 +410,22 @@
               • Allowance can be used monthly (10%) or accumulated (20% / 2 months).<br/>
               • By Month 11+, you reach <strong>100% penalty-free access</strong>.
             </p>
+          </div>
+        </div>
+
+        <!-- NEW: snapshot schedule table -->
+        <div class="mini" style="margin-top:14px;">
+          <h3>Access schedule (snapshot)</h3>
+          <p class="small" style="margin:0 0 10px;">
+            A simple, transparent reference used for access calculations (allowance can be accumulated).
+          </p>
+          <div class="sched">
+            <div class="rule"><div>Month 1–2 <span>Penalty-free</span></div><div class="badge good">10%</div></div>
+            <div class="rule"><div>Month 3–4 <span>Penalty-free</span></div><div class="badge good">20%</div></div>
+            <div class="rule"><div>Month 5–6 <span>Penalty-free</span></div><div class="badge good">30%</div></div>
+            <div class="rule"><div>Month 7–8 <span>Penalty-free</span></div><div class="badge good">40%</div></div>
+            <div class="rule"><div>Month 9–10 <span>Penalty-free</span></div><div class="badge warn">60%</div></div>
+            <div class="rule"><div>Month 11+ <span>Penalty-free</span></div><div class="badge warn">100%</div></div>
           </div>
         </div>
 
@@ -437,11 +462,12 @@
             <div class="rules" style="margin-top:12px;">
               <div class="rule">
                 <div><strong>Penalty-free allowance</strong><br/><span>withdrawable now under rules</span></div>
-                <div class="badge good" id="allowPct">—</div>
+                <!-- DEFAULT values (no blank flash) -->
+                <div class="badge good" id="allowPct">Up to 10%</div>
               </div>
               <div class="rule">
                 <div><strong>Allowance amount</strong><br/><span>based on your deposit amount</span></div>
-                <div class="badge" id="allowAmt">—</div>
+                <div class="badge" id="allowAmt">10,000 USDT × 10% = 1,000 USDT</div>
               </div>
               <div class="rule">
                 <div><strong>Withdrawing above allowance</strong><br/><span>what happens?</span></div>
@@ -458,7 +484,7 @@
             <p>
               <strong>Deposit:</strong> 10,000 USDT<br/>
               <strong>Month 1:</strong> up to 1,000 USDT penalty-free<br/>
-              <strong>Month 6:</strong> allowance is meaningfully higher (system-defined schedule)<br/>
+              <strong>Month 6:</strong> penalty-free allowance typically aligns with the snapshot schedule (e.g., ~30%)<br/>
               <strong>Month 11+:</strong> full access (100% penalty-free)<br/><br/>
               <span class="small">
                 This example describes access mechanics only. Yield is performance-based and not guaranteed.
@@ -696,7 +722,7 @@
   const form = document.getElementById("confirmForm");
   const emailLink = document.getElementById("emailLink");
 
-  // NEW: calculator elements
+  // calculator elements
   const calcAmountEl = document.getElementById("calcAmount");
   const calcMonthEl = document.getElementById("calcMonth");
   const allowPctEl = document.getElementById("allowPct");
@@ -725,7 +751,7 @@
     return n.toLocaleString(undefined, {maximumFractionDigits: 2}) + " USDT";
   }
 
-  // Simple access schedule (transparent example):
+  // Access schedule used for calculations:
   // Month 1:10% | 2:10% | 3:20% | 4:20% | 5:30% | 6:30% | 7:40% | 8:40% | 9:60% | 10:60% | 11+:100%
   const ACCESS_PCT_BY_MONTH = {
     1:10, 2:10, 3:20, 4:20, 5:30, 6:30, 7:40, 8:40, 9:60, 10:60, 11:100
@@ -742,6 +768,7 @@
     const allowance = amt * (pct / 100);
 
     allowPctEl.textContent = `Up to ${pct}%`;
+    // More readable than formula on UI; keeps it clean.
     allowAmtEl.textContent = fmtUSDT(allowance);
   }
 
