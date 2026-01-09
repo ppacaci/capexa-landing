@@ -10,11 +10,9 @@
 
   <!-- Open Graph -->
   <meta property="og:title" content="Capexa — Controlled Liquidity" />
-  <meta property="og:description" content="Deposit USDT (TRC-20). Withdraw progressively. Early access is open." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://capexa.io" />
-  <!-- If you add /public/og.png later: -->
-  <!-- <meta property="og:image" content="https://capexa.io/og.png" /> -->
+  <meta property="og:image" content="https://capexa.io/og.png" /> 
 
   <style>
     :root{
@@ -300,12 +298,11 @@
         <div class="inner">
           <h2 class="sectionTitle" id="rules">Progressive Withdrawal Rules</h2>
           <p class="p">Rules are disclosed clearly before deposit. Withdrawals above the penalty-free limit trigger a predefined early exit fee.</p>
+          <p class="p" style="margin-top:8px;">
+            <strong>48-hour cooling-off:</strong> withdrawal request possible within 48 hours of deposit, subject to a <strong>2% processing fee</strong>.
+          </p>
 
           <div class="rules">
-            <div class="rule">
-              <div>First 48h <span>Cooling-off withdrawal request</span></div>
-              <div class="badge warn">2% fee</div>
-            </div>
             <div class="rule"><div>Month 1 <span>Penalty-free withdrawal</span></div><div class="badge good">Up to 10%</div></div>
             <div class="rule"><div>Month 2+ <span>Penalty-free limit increases</span></div><div class="badge good">Progressive</div></div>
             <div class="rule"><div>Month 11+ <span>Penalty-free withdrawal</span></div><div class="badge warn">100%</div></div>
@@ -442,14 +439,14 @@
         <h2 class="sectionTitle">FAQ</h2>
 
         <div class="rules" style="margin-top:10px;">
-        <div class="rule">
-          <div><strong>Can I cancel after depositing?</strong><br/><span>48-hour cooling-off</span></div>
-          <div class="badge warn">2% fee</div>
-        </div>
-        <p class="p" style="margin:-4px 0 10px;">
-          Yes. A 48-hour cooling-off period applies after deposit. Participants may request a withdrawal within this period,
-          subject to a <strong>2% processing fee</strong>. After 48 hours, progressive withdrawal rules apply.
-        </p>
+          <div class="rule">
+            <div><strong>Can I cancel after depositing?</strong><br/><span>48-hour cooling-off</span></div>
+            <div class="badge warn">2% fee</div>
+          </div>
+          <p class="p" style="margin:-4px 0 10px;">
+            Yes. A 48-hour cooling-off period applies after deposit. Participants may request a withdrawal within this period,
+            subject to a <strong>2% processing fee</strong>. After 48 hours, progressive withdrawal rules apply.
+          </p>
           <div class="rule">
             <div><strong>Do I earn a return?</strong><br/><span>How does performance work?</span></div>
             <div class="badge good">Yes*</div>
