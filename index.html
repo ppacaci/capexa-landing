@@ -1,349 +1,556 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <link rel="icon" href="/favicon.ico" />
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta property="og:title" content="Foldera" />
-  <meta property="og:description" content="Evaluate your ETH with fixed terms and clear rules." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://foldera.io" />
-  <title>Foldera</title>
+  <title>Capexa — Controlled Liquidity, Progressive Withdrawals</title>
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/favicon.png">
+  <meta name="description" content="Deposit USDT (TRC-20) and withdraw progressively under transparent rules. Early access is open." />
+
   <!-- Open Graph -->
-  <meta property="og:title" content="Foldera" />
-  <meta property="og:description" content="Evaluate your ETH with fixed terms and clear rules." />
+  <meta property="og:title" content="Capexa — Controlled Liquidity" />
+  <meta property="og:description" content="Deposit USDT (TRC-20). Withdraw progressively. Early access is open." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://foldera.io" />
-  <meta property="og:image" content="https://foldera.io/og.png" />
-  
-  <!-- Twitter / X -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Foldera" />
-  <meta name="twitter:description" content="Evaluate your ETH with fixed terms and clear rules." />
-  <meta name="twitter:image" content="https://foldera.io/og.png" />
-  <meta name="description" content="Evaluate your ETH with fixed terms and clear rules." />
-  
+  <meta property="og:url" content="https://capexa.io" />
+  <!-- If you add /public/og.png later: -->
+  <!-- <meta property="og:image" content="https://capexa.io/og.png" /> -->
+
+  <style>
+    :root{
+      --bg:#07090f;
+      --panel:#0c1020;
+      --panel2:#0a0e1a;
+      --text:#e9ecff;
+      --muted:#aab1d6;
+      --line:rgba(255,255,255,.10);
+      --accent:#6ea8ff;
+      --accent2:#7cffb5;
+      --warn:#ffd67a;
+      --danger:#ff7a7a;
+      --radius:18px;
+      --shadow: 0 16px 60px rgba(0,0,0,.55);
+      --shadow2: 0 10px 30px rgba(0,0,0,.40);
+      --max: 1080px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background:
+        radial-gradient(900px 500px at 20% 10%, rgba(110,168,255,.18), transparent 60%),
+        radial-gradient(900px 500px at 80% 20%, rgba(124,255,181,.10), transparent 55%),
+        radial-gradient(900px 500px at 60% 90%, rgba(110,168,255,.10), transparent 55%),
+        var(--bg);
+      color:var(--text);
+      line-height:1.5;
+    }
+    a{color:inherit}
+    .wrap{max-width:var(--max); margin:0 auto; padding:28px 18px 64px}
+    header{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; padding:8px 2px 22px;
+    }
+    .brand{display:flex; align-items:center; gap:10px; text-decoration:none}
+    .logo{
+      width:34px; height:34px; border-radius:12px;
+      background: linear-gradient(135deg, rgba(110,168,255,.95), rgba(124,255,181,.85));
+      box-shadow: var(--shadow2);
+    }
+    .brand span{font-weight:750; letter-spacing:.2px}
+    .nav{display:flex; gap:14px; align-items:center}
+    .nav a{color:var(--muted); text-decoration:none; font-size:14px}
+    .nav a:hover{color:var(--text)}
+    .pill{
+      font-size:12px; padding:7px 10px; border-radius:999px;
+      border:1px solid var(--line); color:var(--muted);
+      background: rgba(255,255,255,.03);
+    }
+
+    .hero{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap:18px;
+      align-items:stretch;
+      margin-top:10px;
+    }
+    @media (max-width: 920px){
+      .hero{grid-template-columns:1fr; }
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .card .inner{padding:22px}
+    h1{
+      margin:0 0 10px;
+      font-size:42px;
+      line-height:1.08;
+      letter-spacing:-.6px;
+    }
+    @media (max-width: 520px){
+      h1{font-size:34px}
+    }
+    .sub{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size:16px;
+      max-width: 58ch;
+    }
+    .ctaRow{display:flex; gap:12px; flex-wrap:wrap; align-items:center}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      border-radius: 14px;
+      padding:12px 14px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color:var(--text);
+      text-decoration:none;
+      font-weight:650;
+      font-size:14px;
+      cursor:pointer;
+      transition: transform .08s ease, background .12s ease, border-color .12s ease;
+      user-select:none;
+    }
+    .btn:hover{background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.16)}
+    .btn:active{transform: translateY(1px)}
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(110,168,255,.92), rgba(124,255,181,.85));
+      border-color: rgba(255,255,255,.18);
+      color:#061021;
+    }
+    .note{
+      margin-top:12px; color:var(--muted); font-size:13px;
+    }
+
+    .grid{
+      display:grid; gap:14px;
+      grid-template-columns: repeat(3, 1fr);
+      margin-top:14px;
+    }
+    @media (max-width: 920px){
+      .grid{grid-template-columns:1fr}
+    }
+    .mini{
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.18);
+      border-radius: 16px;
+      padding:16px;
+    }
+    .mini h3{margin:0 0 6px; font-size:15px}
+    .mini p{margin:0; color:var(--muted); font-size:13px}
+
+    .section{margin-top:18px}
+    .sectionTitle{
+      margin:0 0 10px;
+      font-size:18px;
+      letter-spacing:-.2px;
+    }
+    .p{margin:0; color:var(--muted); font-size:14px}
+    .hr{height:1px; background:var(--line); margin:16px 0}
+
+    .rules{
+      display:grid; gap:10px;
+      margin-top:10px;
+    }
+    .rule{
+      display:flex; justify-content:space-between; align-items:center;
+      gap:12px;
+      padding:12px 14px;
+      border:1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255,255,255,.02);
+      font-size:14px;
+    }
+    .rule span{color:var(--muted)}
+    .badge{
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      color:var(--text);
+      white-space:nowrap;
+    }
+    .badge.warn{border-color: rgba(255,214,122,.35); background: rgba(255,214,122,.08); color: #ffe8b0;}
+    .badge.good{border-color: rgba(124,255,181,.28); background: rgba(124,255,181,.08); color: #caffdf;}
+
+    .depositCard .inner{padding:20px}
+    .field{display:flex; flex-direction:column; gap:6px; margin-top:10px}
+    label{font-size:12px; color:var(--muted)}
+    select,input,textarea{
+      border-radius: 14px;
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.22);
+      color: var(--text);
+      padding:12px 12px;
+      outline:none;
+      font-size:14px;
+    }
+    textarea{min-height: 88px; resize: vertical}
+    .addrBox{
+      margin-top:10px;
+      border:1px dashed rgba(255,255,255,.18);
+      background: rgba(255,255,255,.02);
+      border-radius: 14px;
+      padding:12px;
+      display:flex; flex-direction:column; gap:8px;
+    }
+    .addrRow{
+      display:flex; gap:10px; align-items:center; justify-content:space-between;
+      flex-wrap:wrap;
+    }
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
+    .small{font-size:12px; color:var(--muted)}
+    .warnBox{
+      margin-top:12px;
+      border:1px solid rgba(255,122,122,.22);
+      background: rgba(255,122,122,.08);
+      border-radius: 14px;
+      padding:12px;
+      color:#ffd1d1;
+      font-size:13px;
+    }
+
+    footer{
+      margin-top:28px;
+      padding-top:16px;
+      border-top:1px solid var(--line);
+      color:var(--muted);
+      font-size:13px;
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:center;
+    }
+    .links a{color:var(--muted); text-decoration:none; margin-left:12px}
+    .links a:hover{color:var(--text)}
+  </style>
+
   <!-- Vercel Web Analytics -->
   <script>
     window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
   </script>
   <script defer src="/_vercel/insights/script.js"></script>
-  
-  <style>
-    :root { color-scheme: dark; }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      background: #05070c;
-      color: #eaf0ff;
-    }
-    a { color: inherit; text-decoration: none; }
-    .wrap { max-width: 1080px; margin: 0 auto; padding: 28px 18px 60px; }
-    .container { max-width: 1080px; margin: 0 auto; }
-    .nav {
-      display:flex; align-items:center; justify-content:space-between;
-      padding: 14px 0;
-    }
-    .brand { display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.3px; }
-    .logo {
-      width: 34px; height: 34px; border-radius: 12px;
-      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.22), rgba(255,255,255,0)),
-                  linear-gradient(135deg, rgba(120,180,255,.85), rgba(160,120,255,.85));
-      box-shadow: 0 10px 30px rgba(120,180,255,.18);
-    }
-    .pill {
-      font-size: 12px; padding: 8px 12px; border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      backdrop-filter: blur(8px);
-    }
-
-    .hero {
-      margin-top: 26px;
-      border-radius: 26px;
-      border: 1px solid rgba(255,255,255,.12);
-      background:
-        radial-gradient(900px 500px at 10% 10%, rgba(120,180,255,.20), transparent 60%),
-        radial-gradient(900px 500px at 90% 20%, rgba(160,120,255,.18), transparent 60%),
-        radial-gradient(900px 500px at 50% 100%, rgba(70,220,200,.10), transparent 60%),
-        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      box-shadow: 0 30px 80px rgba(0,0,0,.55);
-      overflow: hidden;
-      position: relative;
-    }
-    .hero-inner { padding: 44px 22px; display:grid; gap: 26px; grid-template-columns: 1.2fr .8fr; align-items:center; }
-    @media (max-width: 860px) { .hero-inner { grid-template-columns: 1fr; } }
-
-    h1 { margin:0; font-size: 44px; line-height: 1.05; letter-spacing: -0.8px; }
-    h2 { margin:14px 0 0; font-size: 16px; line-height: 1.55; color: rgba(234,240,255,.78); font-weight: 500; }
-    .subline { margin-top: 10px; font-size: 15px; color: rgba(234,240,255,.72); }
-
-    .cta { display:flex; gap: 12px; margin-top: 22px; flex-wrap: wrap; }
-    .btn {
-      padding: 12px 14px; border-radius: 14px; font-weight: 650; font-size: 14px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      transition: transform .15s ease, background .15s ease, border-color .15s ease;
-    }
-    .btn:hover { transform: translateY(-1px); background: rgba(255,255,255,.10); border-color: rgba(255,255,255,.18); }
-    .btn.primary {
-      background: linear-gradient(135deg, rgba(120,180,255,.95), rgba(160,120,255,.95));
-      border-color: rgba(255,255,255,.18);
-      color: #071018;
-    }
-    .btn.primary:hover { background: linear-gradient(135deg, rgba(120,180,255,1), rgba(160,120,255,1)); }
-
-    .note { margin-top: 10px; font-size: 12px; color: rgba(234,240,255,.60); }
-
-    .cardgrid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 22px; }
-    @media (max-width: 860px) { .cardgrid { grid-template-columns: 1fr; } }
-    .card {
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.05);
-      padding: 14px;
-    }
-    .card h3 { margin:0; font-size: 13px; letter-spacing: .2px; color: rgba(234,240,255,.92); }
-    .card p { margin:8px 0 0; font-size: 13px; line-height: 1.45; color: rgba(234,240,255,.70); }
-
-    .rightbox {
-      border-radius: 22px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.25);
-      padding: 16px;
-    }
-    .steps { margin: 0; padding-left: 18px; color: rgba(234,240,255,.78); font-size: 13px; line-height: 1.65; }
-    .tagline { font-size: 12px; color: rgba(234,240,255,.62); margin-top: 10px; }
-
-    .footer { margin-top: 26px; font-size: 12px; color: rgba(234,240,255,.55); display:flex; justify-content:space-between; flex-wrap: wrap; gap: 10px; }
-    .bg-lines {
-      position:absolute; inset: -40px -40px auto -40px; height: 220px;
-      opacity:.18;
-      background-image: linear-gradient(to right, rgba(255,255,255,.18) 1px, transparent 1px),
-                        linear-gradient(to bottom, rgba(255,255,255,.10) 1px, transparent 1px);
-      background-size: 38px 38px;
-      transform: skewY(-8deg);
-      pointer-events:none;
-    }
-    .trustbar{
-      margin-top:12px;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-    .trustitem{
-      font-size:12px;
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.05);
-      color:rgba(234,240,255,.70);
-    }
-    .section.faq{
-      padding: 64px 0;
-    }
-    
-    .section-title{
-      font-size: 32px;
-      margin: 0 0 8px 0;
-    }
-    
-    .section-subtitle{
-      margin: 0 0 24px 0;
-      opacity: .75;
-    }
-    
-    .faq-list{
-      display: grid;
-      gap: 12px;
-      width: 100%;
-    }
-    
-    .faq-item{
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
-      border-radius: 16px;
-      padding: 0;
-      overflow: hidden;
-    }
-    
-    .faq-item summary{
-      cursor: pointer;
-      list-style: none;
-      padding: 16px 16px;
-      font-weight: 600;
-      outline: none;
-    }
-    
-    .faq-item summary::-webkit-details-marker{
-      display:none;
-    }
-    
-    .faq-item summary:after{
-      content: "+";
-      float: right;
-      opacity: .8;
-    }
-    
-    .faq-item[open] summary:after{
-      content: "–";
-    }
-    
-    .faq-content{
-      padding: 0 16px 16px 16px;
-      opacity: .85;
-      line-height: 1.5;
-    }
-  </style>
+  <meta property="og:description" content="Deposit USDT (TRC-20). Withdraw progressively under transparent rules." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Capexa — Controlled Liquidity" />
+  <meta name="twitter:description" content="Deposit USDT (TRC-20). Withdraw progressively under transparent rules." />
+  <meta name="twitter:image" content="https://capexa.io/og.png" />
 </head>
 
 <body>
   <div class="wrap">
-    <div class="nav">
-      <div class="brand">
+    <header>
+      <a class="brand" href="#top" aria-label="Capexa home">
         <div class="logo" aria-hidden="true"></div>
-        <div>Foldera</div>
-      </div>
-      <div class="pill">Early access</div>
+        <span>Capexa</span>
+        <span class="pill">Early Access</span>
+      </a>
+      <nav class="nav">
+        <a href="#rules">Rules</a>
+        <a href="#deposit">Deposit</a>
+        <a href="#risk">Risk</a>
+      </nav>
+    </header>
+
+    <main id="top" class="hero">
+      <section class="card">
+        <div class="inner">
+          <h1>Capital access with controlled liquidity.</h1>
+          <p class="sub">Deposit USDT (TRC-20), participate early, and withdraw progressively under transparent rules.</p>
+
+          <p class="sub" style="margin-top:-10px;">Participants receive <strong>performance-based allocation</strong>. Early access participants receive better allocation terms.</p>
+
+          <div class="ctaRow">
+            <a class="btn primary" href="#deposit">Join Early Access</a>
+            <a class="btn" href="mailto:info@capexa.io?subject=Capexa%20Early%20Access%20Question">Contact</a>
+          </div>
+
+          <div class="note">Manual deposits during early access phase.</div>
+
+          <div class="grid">
+            <div class="mini">
+              <h3>Deposit USDT (TRC-20)</h3>
+              <p>Single-asset intake for speed and simplicity.</p>
+            </div>
+            <div class="mini">
+              <h3>Structured Allocation</h3>
+              <p>Capital participates inside the system under predefined access conditions.</p>
+            </div>
+            <div class="mini">
+              <h3>Progressive Withdrawals</h3>
+              <p>Liquidity unlocks gradually over time — not all at once.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="card">
+        <div class="inner">
+          <h2 class="sectionTitle" id="rules">Progressive Withdrawal Rules</h2>
+          <p class="p">Rules are disclosed clearly before deposit. Withdrawals above the penalty-free limit trigger a predefined early exit fee.</p>
+
+          <div class="rules">
+            <div class="rule"><div>Month 1 <span>Penalty-free withdrawal</span></div><div class="badge good">Up to 10%</div></div>
+            <div class="rule"><div>Month 2+ <span>Penalty-free limit increases</span></div><div class="badge good">Progressive</div></div>
+            <div class="rule"><div>Month 11+ <span>Penalty-free withdrawal</span></div><div class="badge warn">100%</div></div>
+          </div>
+
+          <div class="hr"></div>
+
+          <h2 class="sectionTitle">Why controlled liquidity matters</h2>
+          <p class="p">
+            Most capital systems fail because liquidity is unmanaged. Instant full exits break systems.
+            Capexa introduces progressive access — allowing capital to work efficiently while preserving participant control.
+          </p>
+
+          <div class="hr"></div>
+
+          <h2 class="sectionTitle">What participants receive</h2>
+          <div class="rules" style="margin-top:10px;">
+            <div class="rule"><div><strong>Performance-based allocation</strong> <span>(not guaranteed)</span></div><div class="badge good">Variable</div></div>
+            <div class="rule"><div><strong>Progressive withdrawal rights</strong> <span>improve over time</span></div><div class="badge good">Monthly</div></div>
+            <div class="rule"><div><strong>Early access advantage</strong> <span>terms adjust as participation grows</span></div><div class="badge warn">Phase</div></div>
+          </div>
+
+
+          <div class="hr"></div>
+
+          <h2 class="sectionTitle">Accepted deposit asset</h2>
+          <p class="p"><strong>USDT</strong> <span class="small">(Network: Tron TRC-20 only)</span></p>
+        </div>
+      </aside>
+    </main>
+
+    <section class="section card depositCard" id="deposit" style="margin-top:18px;">
+      <div class="inner">
+        <h2 class="sectionTitle">Early Access Deposit (USDT only)</h2>
+        <p class="p"><strong>Minimum deposit:</strong> 250 USDT</p>
+        <p class="p">Capexa is currently in early access. Deposits are processed manually to ensure speed, flexibility, and accuracy.</p>
+        <p class="p">Deposits are confirmed manually. You will receive a confirmation email after verification.</p>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px; margin-top:14px;">
+          <div style="min-width:0;">
+  <div class="sectionTitle" style="margin-bottom:6px;">Deposit details</div>
+  <p class="p">Deposits are accepted in <strong>USDT only</strong> for operational simplicity during early access.</p>
+
+  <div class="addrBox" aria-live="polite">
+    <div class="small">Deposit asset</div>
+    <div style="font-weight:750;">USDT (TRC-20)</div>
+
+    <div class="hr" style="margin:10px 0;"></div>
+
+    <div class="small">Deposit address</div>
+    <div id="address" class="mono" style="font-size:13px; word-break:break-all;">TPQtw7VZQpLj315n8BnecKdGhqMLPyyoMP</div>
+    <div id="network" class="small">Network: Tron (TRC-20) — ONLY</div>
+
+    <div class="addrRow" style="margin-top:6px;">
+      <div class="small">Double-check the address before sending.</div>
+      <button class="btn" type="button" id="copyBtn">Copy</button>
     </div>
+  
+  <div style="margin-top:12px; text-align:center;">
+    <img src="/usdt_trc20_qr.png" alt="USDT TRC-20 QR Code"
+         style="width:180px; max-width:100%; border-radius:12px; border:1px solid rgba(255,255,255,.15);" />
+    <div class="small" style="margin-top:6px;">
+      Scan to deposit USDT (TRC-20)
+    </div>
+  </div>
 
-    <section class="hero">
-      <div class="bg-lines"></div>
-      <div class="hero-inner">
-        <div>
-          <h1>Evaluate your ETH with fixed terms and clear rules.</h1>
-          <h2>Terms, conditions, and exit rules are defined upfront.</h2>
-          <div class="subline">Designed for long-term thinking, not short-term hype.</div>
+  </div>
 
-          <div class="cta">
-            <!-- TODO: Replace FORM_LINK with your Google Form link -->
-            <a class="btn primary" href="https://docs.google.com/forms/d/e/1FAIpQLSec_Z_6JiVFWvFDCpWlUfpiWAo_o3R1IYg_cO2fS1TrEJ4SoA/viewform" target="_blank" rel="noopener">Join the waitlist</a>
-            <a class="btn" href="#faq">Read FAQ</a>
-          </div>
-          <div class="note">Early access registrations are collected via a short form. No payment required.</div>
-          
-          
-<div class="trustbar">
-  <div class="trustitem">No payment</div>
-  <div class="trustitem">No commitment</div>
-  <div class="trustitem">Flexible liquidity over time</div>
-  <div class="trustitem">Early access benefits (limited)</div>
-  <div class="trustitem">Validation before automation</div>
-  <div class="trustitem">Global early access</div>
+  <div class="warnBox">
+    <strong>Important:</strong><br/>
+    • USDT deposits are accepted <strong>ONLY</strong> via TRC-20 (Tron)<br/>
+    • Minimum deposit: <strong>250 USDT</strong><br/>
+    • Sending via any other network may result in loss of funds<br/>
+    • Always verify the official domain: <strong>capexa.io</strong><br/>
+    • If anything looks different, stop and email <a href="mailto:info@capexa.io">info@capexa.io</a>
+  </div>
+
+  <div class="small" style="margin-top:10px;">
+    Official channels: capexa.io • info@capexa.io • @CapexaHQ
+  </div>
 </div>
-        </div>
 
-        <div class="rightbox">
-          <div class="pill" style="display:inline-block; margin-bottom:12px;">How it works</div>
-          <ol class="steps">
-            <li>Deposit ETH</li>
-            <li>Choose a fixed term</li>
-            <li>Hold, exit early, or complete the term</li>
-          </ol>
-          <div class="tagline">No guarantees. No hidden rules. Participation involves risk.</div>
-        </div>
-      </div>
-    </section>
+          <div style="min-width:0;">
+            <form id="confirmForm">
+              <div class="field">
+                <label for="email">Your email</label>
+                <input id="email" type="email" placeholder="you@domain.com" required />
+              </div>
+              <div class="field">
+                <label for="tx">Transaction hash (TXID)</label>
+                <input id="tx" type="text" placeholder="Paste tx hash" required />
+              </div>
+              <div class="field">
+                <label for="amount">Amount (optional)</label>
+                <input id="amount" type="text" placeholder="e.g., 1.25" />
+              </div>
+              <div class="field">
+                <label for="note">Notes (optional)</label>
+                <textarea id="note" placeholder="Any notes, contact handle, etc."></textarea>
+              </div>
 
-      <section id="faq" class="section faq">
-        <div class="container">
-          <h2 class="section-title">FAQ</h2>
-          <p class="section-subtitle">Short answers, clear rules.</p>
-      
-          <div class="faq-list">
-      
-            <details class="faq-item">
-              <summary>What is Foldera?</summary>
-              <div class="faq-content">
-                Foldera explores fixed-term ETH-based structures with clear rules and defined exits.
-                Early access is used to measure interest and shape the structure.
+              <div class="ctaRow" style="margin-top:12px;">
+                <button class="btn primary" type="submit">Submit for Confirmation</button>
+                <a class="btn" id="emailLink" href="mailto:info@capexa.io">Email Info</a>
               </div>
-            </details>
-      
-            <details class="faq-item">
-              <summary>Is this live?</summary>
-              <div class="faq-content">
-                No. Foldera is currently in an early access phase. No funds are accepted at this stage.
+
+              <p class="small" style="margin-top:10px;">
+                For confirmation or questions: <a href="mailto:info@capexa.io">info@capexa.io</a>
+              </p>
+            </form>
+
+              <div class="mini" style="margin-top:12px;">
+                <h3>What happens next?</h3>
+                <p>
+                  After your deposit:
+                  <br/>• We verify your transaction manually
+                  <br/>• You receive a confirmation email
+                  <br/>• Your participation is activated under early access terms
+                </p>
               </div>
-            </details>
-      
-            <details class="faq-item">
-              <summary>How does it work?</summary>
-              <div class="faq-content">
-                Participants indicate preferred terms and amounts. These inputs help define the first structure
-                before anything goes live.
-              </div>
-            </details>
-      
-            <details class="faq-item">
-              <summary>Is there any commitment during early access?</summary>
-              <div class="faq-content">
-                No. Early access does not require payment or commitment.
-              </div>
-            </details>
-      
-            <details class="faq-item">
-              <summary>Which assets are supported?</summary>
-              <div class="faq-content">
-                Initial exploration is focused on ETH. Other assets may be evaluated based on interest.
-              </div>
-            </details>
-      
-            <details class="faq-item">
-              <summary>What happens next?</summary>
-              <div class="faq-content">
-                If sufficient interest is confirmed, the first structure will be finalized and shared with early
-                access participants.
-              </div>
-            </details>
-      
-            <details class="faq-item">
-              <summary>Who is behind Foldera?</summary>
-              <div class="faq-content">
-                The focus is on the structure, not individuals. Foldera is designed as a product-led, anonymous initiative.
-              </div>
-            </details>
-      
-            <details class="faq-item">
-              <summary>Is this an investment offer?</summary>
-              <div class="faq-content">
-                No. This site does not offer investments, guarantees, or financial advice.
-              </div>
-            </details>
-      
           </div>
         </div>
-        <div class="footer">
-        <div>© <span id="y"></span> Foldera</div>
-        <div>contact: info@foldera.io</div>
       </div>
     </section>
+
+    
+    <section class="section card" id="faq">
+      <div class="inner">
+        <h2 class="sectionTitle">FAQ</h2>
+
+        <div class="rules" style="margin-top:10px;">
+          <div class="rule">
+            <div><strong>Do I earn a return?</strong><br/><span>How does performance work?</span></div>
+            <div class="badge good">Yes*</div>
+          </div>
+          <p class="p" style="margin:-4px 0 10px;">
+            Participants receive <strong>performance-based allocation</strong>. Returns are <strong>not guaranteed</strong> and depend on system performance.
+          </p>
+
+          <div class="rule">
+            <div><strong>Is there a fixed APY?</strong><br/><span>Do you guarantee a rate?</span></div>
+            <div class="badge">No fixed APY</div>
+          </div>
+          <p class="p" style="margin:-4px 0 10px;">
+            There is no fixed APY. Terms vary by phase and are disclosed before deposit confirmation.
+          </p>
+
+          <div class="rule">
+            <div><strong>What does “early access advantage” mean?</strong><br/><span>Why early participants benefit more</span></div>
+            <div class="badge warn">Phase</div>
+          </div>
+          <p class="p" style="margin:-4px 0 0;">
+            Early participants receive better allocation terms. As participation grows, terms adjust for new entrants.
+          </p>
+        </div>
+      </div>
+    </section>
+
+
+<section class="section card" id="risk">
+      <div class="inner">
+        <h2 class="sectionTitle">Risk & Transparency</h2>
+        <p class="p">
+          Capexa is an early-stage capital access program. Returns are not guaranteed and participation involves market and operational risks.
+          Withdrawal rules, access conditions, and fees are disclosed clearly before deposit.
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      <div>Capexa © 2026 • <a href="mailto:info@capexa.io">info@capexa.io</a></div>
+      <div class="links">
+        <!-- Add real links later if you want -->
+        <a href="#rules">Rules</a>
+        <a href="#deposit">Deposit</a>
+        <a href="#risk">Risk</a>
+      </div>
+    </footer>
   </div>
 
   <script>
-    document.getElementById('y').textContent = new Date().getFullYear();
-  </script>
-  <script>
-    const btn = document.querySelector('a.btn.primary');
-    if (btn) {
-      btn.addEventListener('click', () => {
-        // Lightweight click tracking (works with most analytics tools)
-        console.log('waitlist_click');
-      });
-    }
-  </script>
-  <script>
-    document.querySelectorAll('.faq-item').forEach((d) => {
-      d.addEventListener('toggle', () => {
-        if (d.open) {
-          document.querySelectorAll('.faq-item').forEach((o) => {
-            if (o !== d) o.open = false;
-          });
-        }
-      });
+  const ADDRESS = "TPQtw7VZQpLj315n8BnecKdGhqMLPyyoMP";
+  const NETWORK = "Network: Tron (TRC-20) — ONLY";
+  const ASSET = "USDT (TRC-20)";
+  const MIN_DEPOSIT_USDT = 250;
+
+  const addressEl = document.getElementById("address");
+  const networkEl = document.getElementById("network");
+  const copyBtn = document.getElementById("copyBtn");
+  const form = document.getElementById("confirmForm");
+  const emailLink = document.getElementById("emailLink");
+
+  if (addressEl) addressEl.textContent = ADDRESS;
+  if (networkEl) networkEl.textContent = NETWORK;
+
+  if (copyBtn) {
+    copyBtn.addEventListener("click", async ()=>{
+      try {
+        await navigator.clipboard.writeText(ADDRESS);
+        const old = copyBtn.textContent;
+        copyBtn.textContent = "Copied";
+        setTimeout(()=> copyBtn.textContent = old, 900);
+      } catch {
+        alert("Copy failed. Please copy manually.");
+      }
     });
-  </script>
+  }
+
+  if (form) {
+    form.addEventListener("submit", (e)=>{
+      e.preventDefault();
+      const email = document.getElementById("email").value.trim();
+      const tx = document.getElementById("tx").value.trim();
+      const amount = document.getElementById("amount").value.trim();
+      if (amount) {
+        const n = Number(amount);
+        if (!Number.isFinite(n) || n <= 0) {
+          alert("Please enter a valid amount or leave it blank.");
+          return;
+        }
+        if (n < MIN_DEPOSIT_USDT) {
+          alert(`Minimum deposit is ${MIN_DEPOSIT_USDT} USDT. You can still submit, but deposits below the minimum may not be accepted.`);
+        }
+      }
+      const note = document.getElementById("note").value.trim();
+
+      const subject = encodeURIComponent("Capexa Deposit Confirmation — USDT (TRC-20)");
+      const body = encodeURIComponent(
+`Hello Capexa Team,
+
+I have made a deposit.
+
+Asset: ${ASSET}
+Network: ${NETWORK}
+Deposit address: ${ADDRESS}
+TX Hash: ${tx}
+Amount (optional): ${amount}
+
+Contact email: ${email}
+Notes: ${note}
+
+
+Please confirm the current allocation terms for my deposit phase before final confirmation.
+
+Thanks`
+      );
+
+      const mailto = `mailto:info@capexa.io?subject=${subject}&body=${body}`;
+      if (emailLink) emailLink.href = mailto;
+      window.location.href = mailto;
+    });
+  }
+</script>
 </body>
 </html>
