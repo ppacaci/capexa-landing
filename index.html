@@ -36,17 +36,12 @@
       --shadow: 0 16px 60px rgba(0,0,0,.55);
       --shadow2: 0 10px 30px rgba(0,0,0,.40);
       --max: 1080px;
-      --headerOffset: 96px;
     }
     *{box-sizing:border-box}
     html,body{height:100%}
 
     /* smooth anchor scrolling */
-    html{
-      scroll-behavior: smooth;
-      /* NEW: helps anchors account for sticky header in many browsers */
-      scroll-padding-top: var(--headerOffset);
-    }
+    html{ scroll-behavior: smooth; }
 
     body{
       margin:0;
@@ -62,7 +57,6 @@
     a{color:inherit}
     .wrap{max-width:var(--max); margin:0 auto; padding:28px 18px 64px}
 
-    /* sticky header */
     header{
       display:flex; align-items:center; justify-content:space-between;
       gap:12px; padding:10px 2px 10px;
@@ -141,8 +135,12 @@
       background: rgba(255,255,255,.03);
     }
 
-    /* FIX: anchors for ALL ids (your #rules is on an h2, not a section) */
-    [id]{ scroll-margin-top: var(--headerOffset); }
+    /* anchor offset (sticky header) */
+    main[id]{ scroll-margin-top: 96px; }
+    section[id]{ scroll-margin-top: 96px; }
+
+    /* FIX (only rules): #rules is on an H2, so it needs scroll-margin too */
+    #rules{ scroll-margin-top: 96px; }
 
     .hero{
       display:grid;
@@ -207,7 +205,9 @@
       border-color: rgba(255,255,255,.18);
       color:#061021;
     }
-    .note{ margin-top:12px; color:var(--muted); font-size:13px; }
+    .note{
+      margin-top:12px; color:var(--muted); font-size:13px;
+    }
 
     .grid{
       display:grid; gap:14px;
@@ -235,7 +235,10 @@
     .p{margin:0; color:var(--muted); font-size:14px}
     .hr{height:1px; background:var(--line); margin:16px 0}
 
-    .rules{ display:grid; gap:10px; margin-top:10px; }
+    .rules{
+      display:grid; gap:10px;
+      margin-top:10px;
+    }
     .rule{
       display:flex; justify-content:space-between; align-items:center;
       gap:12px;
@@ -262,8 +265,6 @@
     .depositCard .inner{padding:20px}
     .field{display:flex; flex-direction:column; gap:6px; margin-top:10px}
     label{font-size:12px; color:var(--muted)}
-
-    /* FIX: select readability (including options) */
     select,input,textarea{
       border-radius: 14px;
       border:1px solid var(--line);
@@ -273,33 +274,14 @@
       outline:none;
       font-size:14px;
     }
-    select{
-      appearance: none;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      background-image:
-        linear-gradient(45deg, transparent 50%, rgba(233,236,255,.9) 50%),
-        linear-gradient(135deg, rgba(233,236,255,.9) 50%, transparent 50%),
-        linear-gradient(to right, rgba(255,255,255,.10), rgba(255,255,255,.10));
-      background-position:
-        calc(100% - 18px) calc(50% - 3px),
-        calc(100% - 12px) calc(50% - 3px),
-        calc(100% - 36px) 50%;
-      background-size: 6px 6px, 6px 6px, 1px 18px;
-      background-repeat: no-repeat;
-      padding-right: 44px;
-    }
-    select:focus, input:focus, textarea:focus{
-      border-color: rgba(110,168,255,.45);
-      box-shadow: 0 0 0 3px rgba(110,168,255,.12);
-    }
+
+    /* keep options readable in many browsers */
     select option, select optgroup{
       background: var(--panel2);
       color: var(--text);
     }
 
     textarea{min-height: 88px; resize: vertical}
-
     .addrBox{
       margin-top:10px;
       border:1px dashed rgba(255,255,255,.18);
@@ -682,34 +664,6 @@
               </div>
             </div>
 
-            <div class="hr"></div>
-
-            <h3>Rate preview (not guaranteed)</h3>
-            <p class="small" style="margin:0 0 10px;">
-              Shows how base + early access + your tier bonus reflect as a target annual allocation.
-              Bonus applies only to the first <strong>10,000 USDT</strong>.
-            </p>
-
-            <div class="field" style="margin-top:0;">
-              <label for="tierDeposit">Your deposit (USDT)</label>
-              <input id="tierDeposit" type="number" min="0" step="1" value="10000" />
-            </div>
-
-            <div class="rules" style="margin-top:12px;">
-              <div class="rule">
-                <div><strong>Target annual (bonus portion)</strong><br/><span>applies to first 10,000 USDT</span></div>
-                <div class="badge warn" id="rateBonusPortion">—</div>
-              </div>
-              <div class="rule">
-                <div><strong>Target annual (blended)</strong><br/><span>effective on your full deposit</span></div>
-                <div class="badge good" id="rateBlended">—</div>
-              </div>
-              <div class="rule">
-                <div><strong>Bonus cap used</strong><br/><span>how much receives tier bonus</span></div>
-                <div class="badge" id="capUsed">—</div>
-              </div>
-            </div>
-
             <p class="small" style="margin-top:10px;">
               If the number is above 300, the early phase bonus is <strong>0%</strong> for new entrants.
             </p>
@@ -729,7 +683,7 @@
         <div class="mini" style="margin-top:14px;">
           <h3>Bonus ladder (snapshot)</h3>
           <p class="small" style="margin:0 0 10px;">
-            Starting tier begins at <strong>+75%</strong>. The ladder decreases by <strong>5%</strong> every <strong>20 participants</strong>.
+            Starting tier includes a combined early-phase advantage. The ladder decreases by <strong>5%</strong> every <strong>20 participants</strong>.
           </p>
           <div id="bonusLadder" class="rules"></div>
           <p class="small" style="margin-top:10px;">
@@ -1070,7 +1024,7 @@
     function setActive(){
       if(!navLinks.length || !targets.length) return;
 
-      const y = window.scrollY + 120;
+      const y = window.scrollY + 120; // keep your original offset
       let current = null;
 
       for(const el of targets){
@@ -1109,17 +1063,6 @@
   const ASSET = "USDT (TRC-20)";
   const MIN_DEPOSIT_USDT = 250;
 
-  // Locked terms for preview (not guarantee)
-  const BASE_TARGET_ANNUAL = 20;
-  const EARLY_ACCESS_BONUS = 20;
-
-  // Bonus ladder settings
-  const TIER_START_BONUS = 75;      // start at +75%
-  const TIER_STEP_DOWN = 5;         // -5% per 20 participants
-  const TIER_SIZE = 20;
-  const TIER_MAX_PARTICIPANTS = 300;
-  const TIER_CAP_USDT = 10000;      // bonus cap per participant
-
   const addressEl = document.getElementById("address");
   const networkEl = document.getElementById("network");
   const copyBtn = document.getElementById("copyBtn");
@@ -1136,13 +1079,6 @@
   const tierNEl = document.getElementById("tierN");
   const tierRangeEl = document.getElementById("tierRange");
   const tierBonusEl = document.getElementById("tierBonus");
-  const bonusLadderEl = document.getElementById("bonusLadder");
-
-  // rate preview elements
-  const tierDepositEl = document.getElementById("tierDeposit");
-  const rateBonusPortionEl = document.getElementById("rateBonusPortion");
-  const rateBlendedEl = document.getElementById("rateBlended");
-  const capUsedEl = document.getElementById("capUsed");
 
   if (addressEl) addressEl.textContent = ADDRESS;
   if (networkEl) networkEl.textContent = NETWORK;
@@ -1166,14 +1102,10 @@
     if (!Number.isFinite(n)) return "—";
     return n.toLocaleString(undefined, {maximumFractionDigits: 2}) + " USDT";
   }
-  function pct0(x){
-    const n = Number(x);
-    if (!Number.isFinite(n)) return "—";
-    return `${Math.round(n)}%`;
-  }
 
-  // Access schedule used for calculations:
-  const ACCESS_PCT_BY_MONTH = { 1:10, 2:10, 3:20, 4:20, 5:30, 6:30, 7:40, 8:40, 9:60, 10:60, 11:100 };
+  const ACCESS_PCT_BY_MONTH = {
+    1:10, 2:10, 3:20, 4:20, 5:30, 6:30, 7:40, 8:40, 9:60, 10:60, 11:100
+  };
 
   function updateCalculator(){
     if (!calcAmountEl || !calcMonthEl || !allowPctEl || !allowAmtEl) return;
@@ -1188,32 +1120,31 @@
     allowPctEl.textContent = `Up to ${pct}%`;
     allowAmtEl.textContent = fmtUSDT(allowance);
   }
+
   if (calcAmountEl) calcAmountEl.addEventListener("input", updateCalculator);
   if (calcMonthEl) calcMonthEl.addEventListener("change", updateCalculator);
   updateCalculator();
 
+  // Bonus ladder (first 300): start 75%, decrease 5% every 20 participants
+  const bonusLadderEl = document.getElementById("bonusLadder");
   function tierFromN(n){
-    if (!Number.isFinite(n) || n <= 0) n = 1;
+    if (!Number.isFinite(n) || n <= 0) return {start:1,end:20,bonus:75,active:true};
+    if (n > 300) return {start:301,end:999999,bonus:0,active:false};
 
-    if (n > TIER_MAX_PARTICIPANTS) {
-      return {start:TIER_MAX_PARTICIPANTS+1, end:999999, bonus:0, active:false};
-    }
-
-    const idx = Math.floor((n - 1) / TIER_SIZE); // 0..14
-    const start = idx*TIER_SIZE + 1;
-    const end = (idx+1)*TIER_SIZE;
-    const bonus = TIER_START_BONUS - (idx * TIER_STEP_DOWN); // 75..5
+    const idx = Math.floor((n - 1) / 20); // 0..14
+    const start = idx*20 + 1;
+    const end = (idx+1)*20;
+    const bonus = 75 - (idx * 5);
     return {start, end, bonus, active:true};
   }
 
   function buildBonusLadder(){
     if (!bonusLadderEl) return;
-    const tiersCount = Math.ceil(TIER_MAX_PARTICIPANTS / TIER_SIZE); // 15
     const tiers = [];
-    for (let i = 0; i < tiersCount; i++){
-      const start = i*TIER_SIZE + 1;
-      const end = (i+1)*TIER_SIZE;
-      const bonus = TIER_START_BONUS - (i * TIER_STEP_DOWN);
+    for (let i = 0; i < 15; i++){
+      const start = i*20 + 1;
+      const end = (i+1)*20;
+      const bonus = 75 - (i * 5);
       tiers.push({label:`#${start}–#${end}`, bonus});
     }
     bonusLadderEl.innerHTML = tiers.map(t => `
@@ -1231,11 +1162,10 @@
     const t = tierFromN(n);
 
     if (!t.active){
-      tierRangeEl.textContent = `#${TIER_MAX_PARTICIPANTS+1}+`;
+      tierRangeEl.textContent = `#301+`;
       tierBonusEl.textContent = `0%`;
       tierBonusEl.classList.remove("warn","good");
       tierBonusEl.classList.add("badge");
-      updateRatePreview();
       return;
     }
 
@@ -1243,35 +1173,11 @@
     tierBonusEl.textContent = `+${t.bonus}%`;
     tierBonusEl.classList.remove("warn","good");
     tierBonusEl.classList.add(t.bonus >= 50 ? "warn" : "good");
-    updateRatePreview();
-  }
-
-  function updateRatePreview(){
-    if (!tierNEl || !tierDepositEl || !rateBonusPortionEl || !rateBlendedEl || !capUsedEl) return;
-
-    const n = Number(tierNEl.value || 1);
-    const dep = clamp(Number(tierDepositEl.value || 0), 0, 1e12);
-    const t = tierFromN(n);
-    const tierBonus = t.active ? t.bonus : 0;
-
-    const bonusBase = Math.min(dep, TIER_CAP_USDT);
-    const nonBonus = Math.max(0, dep - bonusBase);
-
-    const rateBonusPortion = BASE_TARGET_ANNUAL + EARLY_ACCESS_BONUS + tierBonus;
-    const rateNonBonus = BASE_TARGET_ANNUAL;
-
-    const blended = dep <= 0 ? NaN : ((bonusBase * rateBonusPortion) + (nonBonus * rateNonBonus)) / dep;
-
-    rateBonusPortionEl.textContent = pct0(rateBonusPortion);
-    rateBlendedEl.textContent = dep <= 0 ? "—" : pct0(blended);
-    capUsedEl.textContent = `${fmtUSDT(bonusBase)} / ${fmtUSDT(dep)}`;
   }
 
   buildBonusLadder();
   if (tierNEl) tierNEl.addEventListener("input", updateTierCalc);
-  if (tierDepositEl) tierDepositEl.addEventListener("input", updateRatePreview);
   updateTierCalc();
-  updateRatePreview();
 
   if (form) {
     form.addEventListener("submit", (e)=>{
@@ -1318,6 +1224,6 @@ Thanks`
       window.location.href = mailto;
     });
   }
-  </script>
+</script>
 </body>
 </html>
