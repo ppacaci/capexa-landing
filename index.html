@@ -254,7 +254,7 @@
       .twoCol{grid-template-columns:1fr}
     }
 
-    /* NEW: schedule table */
+    /* schedule table */
     .sched{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -286,6 +286,7 @@
         <a href="#yield">Yield</a>
         <a href="#deposit">Deposit</a>
         <a href="#risk">Risk</a>
+        <a href="#privacy">Anonymity</a>
       </nav>
     </header>
 
@@ -296,7 +297,13 @@
           <p class="sub">
             Predictable yield without liquidity chaos.
           </p>
-          <p class="micro">Monthly penalty-free withdrawals that increase over time. Early participants receive better allocation terms.</p>
+
+          <!-- UPDATED: clear early-stage + no retroactive line without hype -->
+          <p class="micro">
+            Monthly penalty-free withdrawals that increase over time.
+            <strong>Early access terms</strong> may be better in the initial phase and will <strong>evolve</strong> as participation grows.
+            <span class="small">Changes are applied for new deposits only — never retroactively.</span>
+          </p>
 
           <div class="ctaRow">
             <a class="btn primary" href="#deposit">Join Early Access</a>
@@ -312,7 +319,9 @@
             <p class="small" style="margin-top:6px;">
               Early access is intended for participants who understand and accept structured liquidity rules.
             </p>
-            <div class="small" style="margin-top:6px;">Early access is limited to users who understand and accept the rules.</div>
+            <div class="small" style="margin-top:6px;">
+              No fixed APY. Allocation terms are disclosed before confirmation.
+            </div>
           </div>
 
           <div class="grid">
@@ -336,6 +345,24 @@
               • Yield is <strong>performance-based</strong> (no fixed APY) and may be higher in early phases, then normalize.<br/>
               • You can withdraw <strong>penalty-free</strong> each month — and this allowance <strong>increases over time</strong> until full access.<br/>
               • If you withdraw above your allowance, <strong>not-yet-earned rewards may be reduced</strong> under predefined rules.
+            </p>
+          </div>
+
+          <!-- NEW: "Not for everyone" (short + high trust) -->
+          <div class="mini" style="margin-top:14px;">
+            <h3>Not for everyone</h3>
+            <p>
+              Capexa is designed for participants who prefer <strong>rules over hype</strong> and can commit to structured liquidity.
+              If you need instant full access or you chase fixed APY, this is likely not a fit.
+            </p>
+          </div>
+
+          <!-- NEW: Early-stage disclosure (clean, not salesy) -->
+          <div class="mini" style="margin-top:14px;">
+            <h3>Early-stage disclosure</h3>
+            <p>
+              Capexa is currently in early access. Terms and parameters can be refined as the system matures to maintain sustainability.
+              <strong>No rule changes are applied retroactively</strong> to existing participants.
             </p>
           </div>
         </div>
@@ -377,12 +404,13 @@
           <h2 class="sectionTitle">Yield structure (no fixed APY)</h2>
           <p class="p">
             Early participants are rewarded for providing initial liquidity. As the system matures, yields normalize to keep payouts sustainable.
+            Allocation terms are disclosed <strong>before</strong> confirmation.
           </p>
 
           <div class="rules" style="margin-top:10px;">
             <div class="rule"><div><strong>Performance-based allocation</strong> <span>(not guaranteed)</span></div><div class="badge good">Variable</div></div>
             <div class="rule"><div><strong>Withdrawals are rule-based</strong> <span>not decision-based</span></div><div class="badge good">Rules &gt; Decisions</div></div>
-            <div class="rule"><div><strong>Early access advantage</strong> <span>terms adjust as participation grows</span></div><div class="badge warn">Phase</div></div>
+            <div class="rule"><div><strong>Early access phase</strong> <span>terms may evolve for new deposits</span></div><div class="badge warn">Phase</div></div>
           </div>
 
           <div class="hr"></div>
@@ -408,7 +436,7 @@
             <p>
               • Yield accrues based on system performance (not guaranteed).<br/>
               • Early phases may reward liquidity providers more, then normalize.<br/>
-              • Allocation terms are disclosed before confirmation.
+              • Allocation terms are disclosed before confirmation (manual verification in early access).
             </p>
           </div>
           <div class="mini">
@@ -421,7 +449,6 @@
           </div>
         </div>
 
-        <!-- NEW: snapshot schedule table -->
         <div class="mini" style="margin-top:14px;">
           <h3>Access schedule (snapshot)</h3>
           <p class="small" style="margin:0 0 10px;">
@@ -470,7 +497,6 @@
             <div class="rules" style="margin-top:12px;">
               <div class="rule">
                 <div><strong>Penalty-free allowance</strong><br/><span>withdrawable now under rules</span></div>
-                <!-- DEFAULT values (no blank flash) -->
                 <div class="badge good" id="allowPct">Up to 10%</div>
               </div>
               <div class="rule">
@@ -528,6 +554,10 @@
         </p>
         <p class="p">Capexa is currently in early access. Deposits are processed manually to ensure speed, flexibility, and accuracy.</p>
         <p class="p">Deposits are confirmed manually. You will receive a confirmation email after verification.</p>
+        <p class="p">
+          <strong>Fair-change policy:</strong> Terms may evolve for <strong>new deposits</strong> as the system matures.
+          Existing participants continue under their original deposit terms (no retroactive changes).
+        </p>
 
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px; margin-top:14px;">
           <div style="min-width:0;">
@@ -585,7 +615,7 @@
               </div>
               <div class="field">
                 <label for="amount">Amount (optional)</label>
-                <input id="amount" type="text" placeholder="e.g., 1.25" />
+                <input id="amount" type="text" placeholder="e.g., 250" />
               </div>
               <div class="field">
                 <label for="note">Notes (optional)</label>
@@ -624,6 +654,47 @@
               </p>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW: Anonymity / team frame (transparent, not doxxing) -->
+    <section class="section card" id="privacy">
+      <div class="inner">
+        <h2 class="sectionTitle">Anonymity & Operator Disclosure</h2>
+        <p class="p">
+          Capexa is operated with a privacy-first approach. We keep personal identities private during early access,
+          but we do not hide the rules, fees, channels, or how the system works.
+        </p>
+
+        <div class="twoCol">
+          <div class="mini">
+            <h3>Why anonymity?</h3>
+            <p>
+              • To reduce personal targeting and social engineering risks.<br/>
+              • To keep the focus on rules and mechanics, not personalities.<br/>
+              • To operate cautiously while the system is early-stage.
+            </p>
+          </div>
+          <div class="mini">
+            <h3>What we disclose</h3>
+            <p>
+              • Official domain & channels (capexa.io, info@capexa.io, @CapexaHQ)<br/>
+              • All withdrawal rules, fees, and access conditions<br/>
+              • Fair-change policy (no retroactive changes)
+            </p>
+          </div>
+        </div>
+
+        <div class="mini" style="margin-top:14px;">
+          <h3>Team profile (high-level)</h3>
+          <p>
+            Capexa is built and maintained by a small team with experience in:<br/>
+            • systems engineering & automation<br/>
+            • risk-aware liquidity design<br/>
+            • security-oriented infrastructure practices<br/>
+            <span class="small">We may share more details as the project matures.</span>
+          </p>
         </div>
       </div>
     </section>
@@ -680,6 +751,7 @@
           </div>
           <p class="p" style="margin:-4px 0 10px;">
             Early participants are rewarded for providing initial liquidity. As participation grows, terms adjust for new entrants.
+            <span class="small">Existing participants continue under their original deposit terms.</span>
           </p>
 
           <div class="rule">
@@ -700,9 +772,30 @@
           Capexa is an early-stage capital access program. Returns are not guaranteed and participation involves market and operational risks.
           Withdrawal rules, access conditions, and fees are disclosed clearly before deposit.
         </p>
-        <div class="mini" style="margin-top:12px;">
-          <h3>Transparency principle</h3>
-          <p>No discretionary freezes. Withdrawals are <strong>rule-based</strong>, not decision-based.</p>
+
+        <div class="twoCol" style="margin-top:12px;">
+          <div class="mini">
+            <h3>Transparency principles</h3>
+            <p>
+              • No discretionary freezes — withdrawals are <strong>rule-based</strong>.<br/>
+              • Terms are disclosed before confirmation (manual verification in early access).<br/>
+              • Changes apply to new deposits only — <strong>no retroactive changes</strong>.
+            </p>
+          </div>
+          <div class="mini">
+            <h3>Who this is not for</h3>
+            <p>
+              • short-term trading mindset<br/>
+              • instant full withdrawals<br/>
+              • fixed-APY chasing or guaranteed return expectations
+            </p>
+          </div>
+        </div>
+
+        <div class="warnBox" style="margin-top:14px;">
+          <strong>Important disclosure:</strong><br/>
+          Capexa does not offer fixed returns. Any yield is <strong>variable</strong> and depends on system performance.
+          Participation involves market and operational risks.
         </div>
       </div>
     </section>
@@ -714,6 +807,7 @@
         <a href="#yield">Yield</a>
         <a href="#deposit">Deposit</a>
         <a href="#risk">Risk</a>
+        <a href="#privacy">Anonymity</a>
         <a href="/controlled-liquidity.html">What is controlled liquidity?</a>
         <a href="/progressive-withdrawals.html">What are progressive withdrawals?</a>
       </div>
@@ -778,7 +872,6 @@
     const allowance = amt * (pct / 100);
 
     allowPctEl.textContent = `Up to ${pct}%`;
-    // More readable than formula on UI; keeps it clean.
     allowAmtEl.textContent = fmtUSDT(allowance);
   }
 
