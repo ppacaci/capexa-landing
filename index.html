@@ -36,12 +36,20 @@
       --shadow: 0 16px 60px rgba(0,0,0,.55);
       --shadow2: 0 10px 30px rgba(0,0,0,.40);
       --max: 1080px;
+
+      /* NEW: will be set by JS to match sticky header height */
+      --headerH: 84px;
+      --anchorPad: 18px; /* extra breathing room below header */
     }
+
     *{box-sizing:border-box}
     html,body{height:100%}
 
-    /* smooth anchor scrolling */
-    html{ scroll-behavior: smooth; }
+    /* smooth anchor scrolling + robust offset for ALL anchors */
+    html{
+      scroll-behavior: smooth;
+      scroll-padding-top: calc(var(--headerH) + var(--anchorPad));
+    }
 
     body{
       margin:0;
@@ -134,13 +142,6 @@
       border:1px solid var(--line); color:var(--muted);
       background: rgba(255,255,255,.03);
     }
-
-    /* anchor offset (sticky header) */
-    main[id]{ scroll-margin-top: 96px; }
-    section[id]{ scroll-margin-top: 96px; }
-
-    /* FIX (only rules): #rules is on an H2, so it needs scroll-margin too */
-    #rules{ scroll-margin-top: 96px; }
 
     .hero{
       display:grid;
@@ -275,7 +276,7 @@
       font-size:14px;
     }
 
-    /* keep options readable in many browsers */
+    /* FIX: dropdown text visibility (options) */
     select option, select optgroup{
       background: var(--panel2);
       color: var(--text);
@@ -1006,27 +1007,36 @@
   </div>
 
   <script>
-  /* sticky header scrolled state + scrollspy active nav */
+  /* sticky header scrolled state + scrollspy active nav + KEEP NAV SCROLL POSITION */
   (function(){
     const header = document.querySelector("header");
+    const nav = document.querySelector(".nav");
     const navLinks = Array.from(document.querySelectorAll('.nav a[href^="#"]'));
 
     const targets = navLinks
       .map(a => document.querySelector(a.getAttribute("href")))
       .filter(Boolean);
 
+    function syncHeaderVars(){
+      if(!header) return;
+      const h = header.offsetHeight || 84;
+      document.documentElement.style.setProperty("--headerH", h + "px");
+    }
+
     function setScrolled(){
       if(!header) return;
       if(window.scrollY > 10) header.classList.add("scrolled");
       else header.classList.remove("scrolled");
+      // keep vars in sync (some browsers change header metrics slightly)
+      syncHeaderVars();
     }
 
     function setActive(){
       if(!navLinks.length || !targets.length) return;
+      const headerH = header ? header.offsetHeight : 84;
+      const y = window.scrollY + headerH + 24; // offset for sticky header
 
-      const y = window.scrollY + 120; // keep your original offset
       let current = null;
-
       for(const el of targets){
         const top = el.getBoundingClientRect().top + window.scrollY;
         if(top <= y) current = el;
@@ -1040,18 +1050,53 @@
       }
     }
 
+    function smoothScrollTo(hash){
+      const el = document.querySelector(hash);
+      if(!el) return;
+
+      // IMPORTANT: keep nav scroll position exactly as it is
+      const savedLeft = nav ? nav.scrollLeft : 0;
+
+      // scroll (CSS scroll-padding-top handles header overlap)
+      el.scrollIntoView({ behavior:"smooth", block:"start" });
+
+      // restore nav horizontal scroll (prevent the "jump")
+      if(nav){
+        setTimeout(()=>{ nav.scrollLeft = savedLeft; }, 0);
+        setTimeout(()=>{ nav.scrollLeft = savedLeft; }, 120);
+      }
+    }
+
+    // init
+    syncHeaderVars();
     setScrolled();
     setActive();
+
+    window.addEventListener("resize", ()=>{
+      syncHeaderVars();
+      setActive();
+    }, { passive:true });
 
     window.addEventListener("scroll", ()=>{
       setScrolled();
       setActive();
     }, { passive:true });
 
+    // override clicks: prevent default anchor jump/focus-scroll & keep nav position
     navLinks.forEach(a=>{
-      a.addEventListener("click", ()=>{
+      a.addEventListener("click", (e)=>{
+        const href = a.getAttribute("href");
+        if(!href || !href.startsWith("#")) return;
+
+        e.preventDefault();
+
+        // focus without scrolling the nav container
+        try{ a.focus({ preventScroll:true }); } catch {}
+
         navLinks.forEach(x => x.classList.remove("active"));
         a.classList.add("active");
+
+        smoothScrollTo(href);
       });
     });
   })();
@@ -1224,6 +1269,6 @@ Thanks`
       window.location.href = mailto;
     });
   }
-</script>
+  </script>
 </body>
 </html>
