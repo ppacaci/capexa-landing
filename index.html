@@ -37,15 +37,14 @@
       --shadow2: 0 10px 30px rgba(0,0,0,.40);
       --max: 1080px;
 
-      /* NEW: will be set by JS to match sticky header height */
+      /* will be set by JS to match sticky header height */
       --headerH: 84px;
-      --anchorPad: 18px; /* extra breathing room below header */
+      --anchorPad: 18px;
     }
 
     *{box-sizing:border-box}
     html,body{height:100%}
 
-    /* smooth anchor scrolling + robust offset for ALL anchors */
     html{
       scroll-behavior: smooth;
       scroll-padding-top: calc(var(--headerH) + var(--anchorPad));
@@ -275,8 +274,6 @@
       outline:none;
       font-size:14px;
     }
-
-    /* FIX: dropdown text visibility (options) */
     select option, select optgroup{
       background: var(--panel2);
       color: var(--text);
@@ -419,7 +416,8 @@
             <p>
               • Allocation targets <strong>20% annual</strong> (variable, not guaranteed).<br/>
               • You can withdraw <strong>penalty-free</strong> each month — and this allowance <strong>increases over time</strong> until full access.<br/>
-              • Withdrawing above allowance triggers predefined conditions; <strong>not-yet-earned rewards may be reduced</strong>.
+              • Withdrawing above allowance triggers predefined conditions; <strong>not-yet-earned rewards may be reduced</strong>.<br/>
+              <span class="small">Reductions apply to <strong>not-yet-earned</strong> rewards only; principal access continues per the schedule.</span>
             </p>
           </div>
 
@@ -456,11 +454,12 @@
           </div>
 
           <div class="mini" style="margin-top:12px;">
-            <h3>Example schedule (simple)</h3>
+            <h3>Example schedule (illustrative)</h3>
             <p style="margin:0; color:var(--muted); font-size:13px;">
               Option A (monthly): up to <strong>10%</strong> in Month 1, then increases until <strong>100%</strong> by Month 11<br/>
               Option B (bi-monthly): up to <strong>20%</strong> every 2 months (same total pace)<br/>
-              <span class="small">Participants can act monthly or accumulate allowance — withdrawals are rule-based.</span>
+              <span class="small">Participants can act monthly or accumulate allowance — withdrawals are rule-based.</span><br/>
+              <span class="small">Calculation reference is the snapshot schedule below.</span>
             </p>
           </div>
 
@@ -582,7 +581,8 @@
                 <div class="badge warn">Rules apply</div>
               </div>
               <p class="p" style="margin:-4px 0 0;">
-                If you withdraw above your allowance, predefined early-exit conditions apply and <strong>not-yet-earned rewards may be reduced</strong>.
+                If you withdraw above your allowance, predefined early-exit conditions apply and <strong>not-yet-earned rewards may be reduced</strong>.<br/>
+                <span class="small">Reductions apply to <strong>not-yet-earned</strong> rewards only; principal access continues per the schedule.</span>
               </p>
             </div>
           </div>
@@ -595,7 +595,7 @@
               <strong>Month 6:</strong> penalty-free allowance typically aligns with the snapshot schedule (e.g., ~30%)<br/>
               <strong>Month 11+:</strong> full access (100% penalty-free)<br/><br/>
               <span class="small">
-                This example describes access mechanics only. Yield is performance-based and not guaranteed.
+                This example describes access mechanics only. Allocation is performance-based and not guaranteed.
               </span>
             </p>
 
@@ -612,7 +612,7 @@
 
         <div class="warnBox" style="margin-top:14px;">
           <strong>Important disclosure:</strong><br/>
-          Capexa does not offer fixed returns. Any yield is <strong>variable</strong> and depends on system performance.
+          Capexa does not offer fixed returns. Any allocation is <strong>variable</strong> and depends on system performance.
           Participation involves market and operational risks.
         </div>
       </div>
@@ -626,6 +626,16 @@
           Capexa targets <strong>20% annual allocation</strong> (variable, not guaranteed).
           During early access, participants may receive an <strong>additional early phase bonus</strong> depending on their entry tier.
         </p>
+
+        <!-- NEW: Summary box -->
+        <div class="mini" style="margin-top:12px;">
+          <h3>Summary</h3>
+          <p>
+            • Bonus applies to <strong>first 10,000 USDT</strong> only<br/>
+            • Tiered for <strong>first 300 participants</strong> (−5% / 20)<br/>
+            • Changes apply to <strong>new deposits only</strong> — no retroactive changes
+          </p>
+        </div>
 
         <div class="rules" style="margin-top:12px;">
           <div class="rule">
@@ -708,6 +718,16 @@
           at specific checkpoints. This applies to the participant’s <strong>entire account balance</strong>, including later deposits.
         </p>
 
+        <!-- NEW: Summary box -->
+        <div class="mini" style="margin-top:12px;">
+          <h3>Summary</h3>
+          <p>
+            • First 20 only, <strong>one-time</strong> privilege<br/>
+            • Fee-free exit at <strong>Month 3 / 6 / 9</strong><br/>
+            • Using it forfeits <strong>not-yet-earned</strong> rewards/bonuses
+          </p>
+        </div>
+
         <div class="twoCol">
           <div class="mini">
             <h3>Exit checkpoints</h3>
@@ -747,6 +767,7 @@
         </p>
         <p class="p">Capexa is currently in early access. Deposits are processed manually to ensure speed, flexibility, and accuracy.</p>
         <p class="p">Deposits are confirmed manually. You will receive a confirmation email after verification.</p>
+        <p class="p"><strong>Typical confirmation:</strong> within 24 hours (often same day).</p>
         <p class="p">
           <strong>Fair-change policy:</strong> Terms may evolve for <strong>new deposits</strong> as the system matures.
           Existing deposits continue under their original deposit terms (no retroactive changes).
@@ -888,6 +909,9 @@
             • security-oriented infrastructure practices<br/>
             <span class="small">We may share more details as the project matures.</span>
           </p>
+          <p class="small" style="margin-top:10px;">
+            Security reports: <a href="mailto:security@capexa.io">security@capexa.io</a>
+          </p>
         </div>
       </div>
     </section>
@@ -940,7 +964,8 @@
             <div class="badge warn">Rules apply</div>
           </div>
           <p class="p" style="margin:-4px 0 10px;">
-            Withdrawals above the penalty-free allowance follow predefined early-exit conditions. In such cases, <strong>not-yet-earned rewards may be reduced</strong>.
+            Withdrawals above the penalty-free allowance follow predefined early-exit conditions. In such cases, <strong>not-yet-earned rewards may be reduced</strong>.<br/>
+            <span class="small">Reductions apply to <strong>not-yet-earned</strong> rewards only; principal access continues per the schedule.</span>
           </p>
 
           <div class="rule">
@@ -984,7 +1009,7 @@
 
         <div class="warnBox" style="margin-top:14px;">
           <strong>Important disclosure:</strong><br/>
-          Capexa does not offer fixed returns. Any allocation/yield is <strong>variable</strong> and depends on system performance.
+          Capexa does not offer fixed returns. Any allocation is <strong>variable</strong> and depends on system performance.
           Participation involves market and operational risks.
         </div>
       </div>
@@ -1027,14 +1052,20 @@
       if(!header) return;
       if(window.scrollY > 10) header.classList.add("scrolled");
       else header.classList.remove("scrolled");
-      // keep vars in sync (some browsers change header metrics slightly)
       syncHeaderVars();
     }
 
     function setActive(){
       if(!navLinks.length || !targets.length) return;
+
+      // NEW: when near top, clear active state
+      if (window.scrollY < 40){
+        navLinks.forEach(a => a.classList.remove("active"));
+        return;
+      }
+
       const headerH = header ? header.offsetHeight : 84;
-      const y = window.scrollY + headerH + 24; // offset for sticky header
+      const y = window.scrollY + headerH + 24;
 
       let current = null;
       for(const el of targets){
@@ -1054,20 +1085,15 @@
       const el = document.querySelector(hash);
       if(!el) return;
 
-      // IMPORTANT: keep nav scroll position exactly as it is
       const savedLeft = nav ? nav.scrollLeft : 0;
-
-      // scroll (CSS scroll-padding-top handles header overlap)
       el.scrollIntoView({ behavior:"smooth", block:"start" });
 
-      // restore nav horizontal scroll (prevent the "jump")
       if(nav){
         setTimeout(()=>{ nav.scrollLeft = savedLeft; }, 0);
         setTimeout(()=>{ nav.scrollLeft = savedLeft; }, 120);
       }
     }
 
-    // init
     syncHeaderVars();
     setScrolled();
     setActive();
@@ -1082,7 +1108,6 @@
       setActive();
     }, { passive:true });
 
-    // override clicks: prevent default anchor jump/focus-scroll & keep nav position
     navLinks.forEach(a=>{
       a.addEventListener("click", (e)=>{
         const href = a.getAttribute("href");
@@ -1090,7 +1115,6 @@
 
         e.preventDefault();
 
-        // focus without scrolling the nav container
         try{ a.focus({ preventScroll:true }); } catch {}
 
         navLinks.forEach(x => x.classList.remove("active"));
@@ -1114,13 +1138,11 @@
   const form = document.getElementById("confirmForm");
   const emailLink = document.getElementById("emailLink");
 
-  // access calculator elements
   const calcAmountEl = document.getElementById("calcAmount");
   const calcMonthEl = document.getElementById("calcMonth");
   const allowPctEl = document.getElementById("allowPct");
   const allowAmtEl = document.getElementById("allowAmt");
 
-  // tier calculator elements (bonus)
   const tierNEl = document.getElementById("tierN");
   const tierRangeEl = document.getElementById("tierRange");
   const tierBonusEl = document.getElementById("tierBonus");
@@ -1179,7 +1201,7 @@
     const idx = Math.floor((n - 1) / 20); // 0..14
     const start = idx*20 + 1;
     const end = (idx+1)*20;
-    const bonus = 75 - (idx * 5);
+    const bonus = Math.max(0, 75 - (idx * 5)); // NEW: clamp to 0
     return {start, end, bonus, active:true};
   }
 
@@ -1189,7 +1211,7 @@
     for (let i = 0; i < 15; i++){
       const start = i*20 + 1;
       const end = (i+1)*20;
-      const bonus = 75 - (i * 5);
+      const bonus = Math.max(0, 75 - (i * 5)); // NEW: clamp to 0
       tiers.push({label:`#${start}–#${end}`, bonus});
     }
     bonusLadderEl.innerHTML = tiers.map(t => `
