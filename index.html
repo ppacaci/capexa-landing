@@ -39,6 +39,10 @@
     }
     *{box-sizing:border-box}
     html,body{height:100%}
+
+    /* NEW: smooth anchor scrolling */
+    html{ scroll-behavior: smooth; }
+
     body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
@@ -52,10 +56,25 @@
     }
     a{color:inherit}
     .wrap{max-width:var(--max); margin:0 auto; padding:28px 18px 64px}
+
+    /* UPDATED: sticky header + premium blur */
     header{
       display:flex; align-items:center; justify-content:space-between;
-      gap:12px; padding:8px 2px 22px;
+      gap:12px; padding:10px 2px 10px;
+
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+
+      backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, rgba(7,9,15,.85), rgba(7,9,15,.65));
+      border-bottom: 1px solid rgba(255,255,255,.06);
     }
+    header.scrolled{
+      background: linear-gradient(180deg, rgba(7,9,15,.95), rgba(7,9,15,.88));
+      border-bottom: 1px solid rgba(255,255,255,.10);
+    }
+
     .brand{display:flex; align-items:center; gap:10px; text-decoration:none}
     .logo{
       width:34px; height:34px; border-radius:12px;
@@ -63,14 +82,65 @@
       box-shadow: var(--shadow2);
     }
     .brand span{font-weight:750; letter-spacing:.2px}
-    .nav{display:flex; gap:14px; align-items:center; flex-wrap:wrap}
-    .nav a{color:var(--muted); text-decoration:none; font-size:14px}
-    .nav a:hover{color:var(--text)}
+
+    /* UPDATED: nav overflow (mobile) + no wrap */
+    .nav{
+      display:flex;
+      gap:10px;
+      align-items:center;
+
+      overflow:auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+
+      flex-wrap: nowrap;
+      max-width: 70vw;
+    }
+    .nav::-webkit-scrollbar{ display:none; }
+
+    /* UPDATED: nav link styles + active state */
+    .nav a{
+      position: relative;
+      padding: 8px 10px;
+      border-radius: 12px;
+      white-space: nowrap;
+      color: var(--muted);
+      text-decoration:none;
+      font-size:14px;
+      border: 1px solid transparent;
+      background: transparent;
+      transition: background .12s ease, border-color .12s ease, color .12s ease;
+    }
+    .nav a:hover{
+      color: var(--text);
+      background: rgba(255,255,255,.04);
+      border-color: rgba(255,255,255,.08);
+    }
+    .nav a.active{
+      color: var(--text);
+      background: rgba(255,255,255,.06);
+      border-color: rgba(255,255,255,.14);
+    }
+    .nav a.active::after{
+      content:"";
+      position:absolute;
+      left:10px;
+      right:10px;
+      bottom:4px;
+      height:2px;
+      border-radius:999px;
+      background: linear-gradient(90deg, rgba(110,168,255,.95), rgba(124,255,181,.85));
+    }
+
     .pill{
       font-size:12px; padding:7px 10px; border-radius:999px;
       border:1px solid var(--line); color:var(--muted);
       background: rgba(255,255,255,.03);
     }
+
+    /* NEW: prevent anchors from hiding behind sticky header */
+    main[id]{ scroll-margin-top: 96px; }
+    section[id]{ scroll-margin-top: 96px; }
 
     .hero{
       display:grid;
@@ -81,6 +151,7 @@
     }
     @media (max-width: 920px){
       .hero{grid-template-columns:1fr; }
+      .nav{max-width: 100%;}
     }
 
     .card{
@@ -550,7 +621,6 @@
           During early access, participants may receive an <strong>additional early phase bonus</strong> depending on their entry tier.
         </p>
 
-        <!-- NEW: badge line for extra clarity -->
         <div class="rules" style="margin-top:12px;">
           <div class="rule">
             <div><strong>Bonus cap (per participant)</strong><br/><span>applies to first 10,000 USDT only</span></div>
@@ -567,7 +637,6 @@
         </div>
 
         <div class="twoCol">
-          <!-- NEW: Your tier mini calculator -->
           <div class="mini">
             <h3>Your tier (quick check)</h3>
             <p class="small" style="margin:0 0 10px;">
@@ -930,6 +999,58 @@
       </div>
     </footer>
   </div>
+
+  <script>
+  /* NEW: sticky header scrolled state + scrollspy active nav */
+  (function(){
+    const header = document.querySelector("header");
+    const navLinks = Array.from(document.querySelectorAll('.nav a[href^="#"]'));
+
+    const targets = navLinks
+      .map(a => document.querySelector(a.getAttribute("href")))
+      .filter(Boolean);
+
+    function setScrolled(){
+      if(!header) return;
+      if(window.scrollY > 10) header.classList.add("scrolled");
+      else header.classList.remove("scrolled");
+    }
+
+    function setActive(){
+      if(!navLinks.length || !targets.length) return;
+
+      const y = window.scrollY + 120; // offset for sticky header
+      let current = null;
+
+      for(const el of targets){
+        const top = el.getBoundingClientRect().top + window.scrollY;
+        if(top <= y) current = el;
+      }
+
+      navLinks.forEach(a => a.classList.remove("active"));
+      if(current){
+        const id = "#" + current.id;
+        const activeLink = navLinks.find(a => a.getAttribute("href") === id);
+        if(activeLink) activeLink.classList.add("active");
+      }
+    }
+
+    setScrolled();
+    setActive();
+
+    window.addEventListener("scroll", ()=>{
+      setScrolled();
+      setActive();
+    }, { passive:true });
+
+    navLinks.forEach(a=>{
+      a.addEventListener("click", ()=>{
+        navLinks.forEach(x => x.classList.remove("active"));
+        a.classList.add("active");
+      });
+    });
+  })();
+  </script>
 
   <script>
   const ADDRESS = "TPQtw7VZQpLj315n8BnecKdGhqMLPyyoMP";
